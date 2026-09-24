@@ -78,13 +78,45 @@ JSON parsing and node-link consistency were checked when adding these files, wit
 
 The adapter validates every checkpoint key and tensor shape, including the separate gate/projection halves of fused MLPs. It uses a model clone and ModelPatcher extensions, not core edits or direct forward monkey-patching. Head selection is scoped to each forward using ContextVar, with cleanup on exceptions. Euler state remains FP32; native Qwen-Image 2.1 owns timestep rounding. Prefix KV caching is disabled for the patched clone to match the upstream example.
 
-## Limitations and tests
+## Limitations
 
-Start with an unmodified BF16 base model and CFG=1. This is not for legacy Qwen-Image, Edit 2509/2511, or third-party Diffusers pipeline objects.
+### 1. Image quality: upstream model limitations
 
-ComfyUI merges LoRA weights whereas the upstream Diffusers implementation evaluates separate low-rank branches. Bitwise or pixel-identical upstream output is **not** promised. FP8/GGUF, dynamic VRAM paths, multi-device sharding, torch.compile, masked inpainting and combinations with other model patches remain unverified.
+The [upstream model card](https://huggingface.co/alibaba-pai/Qwen-Image-2.1-Fun-Acc-LoRAs#limitations) reports two quality trade-offs relative to the teacher model:
 
-See [TESTING.md](TESTING.md) for reproducible tests and the precise validation scope. The screenshots above are maintainer-provided demonstrations, not independent full-model validation or a controlled performance benchmark.
+- **Dense, small text:** character strokes can become distorted and legibility can decrease noticeably.
+- **Image editing:** some results can be slightly blurrier or darker, with less fine-detail clarity.
+
+These are reported limitations of the upstream accelerated model, not defects established by this adapter's tests. Four-step acceleration should not be interpreted as guaranteed quality equivalence to a longer teacher-model run; inspect outputs for your own use case.
+
+### 2. Narrow model and sampling support
+
+- Supports only the `qwenimage21_extracted_prefused_v1` four-head Fun-Acc export on a **native ComfyUI Qwen-Image 2.1** base model. It is not a general-purpose LoRA converter or loader, and does not support legacy Qwen-Image / Edit 2509 / Edit 2511 or Diffusers pipeline objects.
+- Uses **four fixed Euler steps and the bundled sigma sequence**. Changing the step count, replacing or slicing the schedule, adding another sigma shift, or substituting a normal KSampler is outside the supported path and may be rejected. Partial-denoise/img2img workflows that require a shortened schedule are not supported by this fixed sampler.
+- LoRA strength is fixed at **1**; there is no strength slider. **CFG=1** is the intended setup. Under normal CFG=1 sampling, negative conditioning does not provide ordinary negative-prompt guidance; other CFG values are not validated.
+- Requires the native model and ModelPatcher APIs described above. Older ComfyUI versions or future API changes may require adapter updates.
+
+### 3. Numerical differences and unverified combinations
+
+ComfyUI merges LoRA updates into model weights; the upstream Diffusers implementation evaluates separate low-rank branches. Different operation order, rounding and base-model precision can change results. **Bitwise or pixel-identical reproduction is not promised**, even with the same prompt and seed.
+
+Start with an unmodified BF16 base model. FP8/GGUF and other quantized variants, dynamic VRAM/offload paths, multi-device sharding, torch.compile, masked inpainting, and combinations with other LoRAs, acceleration plugins or model patches have not been comprehensively validated. The T2I example references an INT8 base: this is a maintainer-provided configuration, not a general quantization-compatibility guarantee. Ordinary instruction-based editing demos do not establish masked-inpainting support.
+
+### 4. Memory and performance
+
+Four-step sampling reduces the requested model evaluations; it does **not** remove the need to load the base model, text encoder and VAE. Do not assume this adapter makes the full pipeline fit on a low-VRAM device. Minimum VRAM/RAM requirements, maximum resolution and batch-size limits have not been established.
+
+The demos use **RTX 5090 D 32GB VRAM + 128GB DDR5 RAM**. These are the demo machine's specifications, **not minimum requirements**. Timings in the screenshots are not a controlled end-to-end benchmark and should not be used to claim a universal speedup. Model loading, text encoding, VAE decoding, resolution, caching and other workflow nodes can affect total time. This adapter disables prefix KV caching for its model clone to match the upstream example.
+
+### 5. Examples and validation scope
+
+The example JSON files require the corresponding local models and additional custom nodes; the editing example also needs an input image selected on your machine. Those dependencies and input images are not bundled. The examples are not guaranteed to run unchanged on every installation.
+
+Automated checks cover checkpoint mapping, low-rank math, head switching, model restoration and reduced-size CPU/CUDA forwards. The screenshots are maintainer-supplied demonstrations, **not independent full-model reproduction or a controlled comparison with upstream**. Broad prompt coverage, resolution coverage and compatibility across hardware remain unverified. This is an unofficial experimental integration without an upstream support guarantee.
+
+## Tests
+
+See [TESTING.md](TESTING.md) for reproducible tests and the precise validation scope. When reporting a problem, include the ComfyUI version, base-model precision, hardware, minimal workflow and error traceback. Do not include credentials or private data.
 
 ## Provenance and licensing
 

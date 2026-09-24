@@ -29,5 +29,24 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(len(set(config["pdd_full_parameters"])), 65)
 
 
+    def test_maintainer_example_workflows(self):
+        names = ("Fun-PDD-sampling-4steps-t2i.json", "qwenimage2.1-pdd-4steps-edit.json")
+        for name in names:
+            with self.subTest(workflow=name):
+                workflow = json.loads((ROOT / "examples" / name).read_text(encoding="utf-8-sig"))
+                self.assertEqual(workflow["version"], 0.4)
+                nodes = {node["id"]: node for node in workflow["nodes"]}
+                self.assertEqual(len(nodes), len(workflow["nodes"]))
+                self.assertTrue(any(node["type"] == "QwenImage21FunPDDLoader" for node in nodes.values()))
+                link_ids = set()
+                for link_id, src, src_slot, dst, dst_slot, _ in workflow["links"]:
+                    self.assertNotIn(link_id, link_ids)
+                    link_ids.add(link_id)
+                    self.assertIn(src, nodes)
+                    self.assertIn(dst, nodes)
+                    self.assertIn(link_id, nodes[src]["outputs"][src_slot]["links"])
+                    self.assertEqual(nodes[dst]["inputs"][dst_slot]["link"], link_id)
+
+
 if __name__ == "__main__":
     unittest.main()

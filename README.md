@@ -65,6 +65,17 @@ SamplerCustom.output ──────► VAE Decode
 
 也支持 `BasicGuider + RandomNoise + SamplerCustomAdvanced`：MODEL 接 BasicGuider，正面条件接其 conditioning，另外两个输出接高级自定义采样器的 sampler 与 sigmas。
 
+### 示例工作流
+
+| 用途 | 工作流 |
+| --- | --- |
+| 四步文生图（T2I） | [Fun-PDD-sampling-4steps-t2i.json](examples/Fun-PDD-sampling-4steps-t2i.json) |
+| 四步图像编辑（Edit） | [qwenimage2.1-pdd-4steps-edit.json](examples/qwenimage2.1-pdd-4steps-edit.json) |
+
+这两个示例由仓库维护者提供，按原文件收录。下载 JSON 后拖入 ComfyUI，按本机环境选择对应的模型、文本编码器、VAE 和 LoRA，并安装工作流使用的额外自定义节点。编辑工作流中的输入图片需要重新选择；模型权重和输入图片不随 JSON 分发。
+
+收录时已检查 JSON 解析和节点连线，未发现明显凭据；这不等于已在其他环境完成出图验证，也不改变下文的兼容性边界。
+
 ### 注意
 
 - 不要用普通 KSampler 设置四步来替代此接法。

@@ -8,7 +8,7 @@ From this repository:
 python -m unittest discover -s tests -p "test_package.py" -v
 ```
 
-Checks source parsing, the bundled four-step configuration and LoRA/full-weight target counts.
+Checks source parsing, the bundled four-step configuration, LoRA/full-weight target counts and the two maintainer-provided example workflows' JSON/node-link consistency. The example files are included unchanged; this static check does not execute them.
 
 ## Native integration tests
 

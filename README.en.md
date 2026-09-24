@@ -35,6 +35,17 @@ Alternatively use BasicGuider + RandomNoise + SamplerCustomAdvanced. The model o
 
 Do not also apply the same file through a regular LoRA loader. Do not replace the supplied schedule with a normal four-step KSampler or an additional shift/scheduler node.
 
+## Example workflows
+
+| Use case | Workflow |
+| --- | --- |
+| Four-step text-to-image (T2I) | [Fun-PDD-sampling-4steps-t2i.json](examples/Fun-PDD-sampling-4steps-t2i.json) |
+| Four-step image editing | [qwenimage2.1-pdd-4steps-edit.json](examples/qwenimage2.1-pdd-4steps-edit.json) |
+
+Both workflows were supplied by the repository maintainer and are included unchanged. Download and drag the JSON into ComfyUI, select the model, text encoder, VAE and LoRA available in your installation, and install any additional custom nodes used by the workflow. Reselect the input image for the editing workflow. Model weights and input images are not bundled.
+
+JSON parsing and node-link consistency were checked when adding these files, with no obvious credentials found. This is not an end-to-end render test on other installations and does not extend the compatibility claims below.
+
 ## What it loads
 
 - 231 LoRA pairs, rank=alpha=64, fixed strength 1.

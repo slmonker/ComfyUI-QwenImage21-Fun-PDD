@@ -1,0 +1,1550 @@
+{
+  "id": "ba44b10b-79b2-4789-8021-a1f60e262c72",
+  "revision": 0,
+  "last_node_id": 27,
+  "last_link_id": 43,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "SaveImageAdvanced",
+      "pos": [
+        4263.314479707213,
+        3172.5798012172577
+      ],
+      "size": [
+        686.10763476175,
+        783.3018050589562
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "SaveImageAdvanced",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "Qwen_image_2.1",
+        "png",
+        "8-bit",
+        "sRGB"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "Qwen_image_2.1",
+        "format": "png",
+        "format.bit_depth": "8-bit",
+        "format.input_color_space": "sRGB"
+      }
+    },
+    {
+      "id": 2,
+      "type": "VAEDecode",
+      "pos": [
+        4005.5633798684844,
+        3176.119815933122
+      ],
+      "size": [
+        230,
+        60
+      ],
+      "flags": {},
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 2
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "VAEDecode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "SamplerCustomAdvanced",
+      "pos": [
+        3655.637382367926,
+        3176.110153357872
+      ],
+      "size": [
+        311.11404859841275,
+        346.33553644880953
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "noise",
+          "type": "NOISE",
+          "link": 4
+        },
+        {
+          "name": "guider",
+          "type": "GUIDER",
+          "link": 5
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 6
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 7
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 39
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.37.0",
+        "Node name for S&R": "SamplerCustomAdvanced",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 4,
+      "type": "BasicGuider",
+      "pos": [
+        3483.9037651069593,
+        3175.426883438342
+      ],
+      "size": [
+        140,
+        46
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 37
+        },
+        {
+          "name": "conditioning",
+          "type": "CONDITIONING",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "GUIDER",
+          "type": "GUIDER",
+          "links": [
+            5
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.37.0",
+        "Node name for S&R": "BasicGuider",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "QwenImage21FunPDDLoader",
+      "pos": [
+        2793.7008201695244,
+        3475.8202761003154
+      ],
+      "size": [
+        361.6575141174716,
+        98.81402749386825
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            36
+          ]
+        },
+        {
+          "name": "pdd_euler",
+          "type": "SAMPLER",
+          "links": [
+            6
+          ]
+        },
+        {
+          "name": "pdd_sigmas",
+          "type": "SIGMAS",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "QwenImage21FunPDDLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        "qwenimage2.1\\Qwen-Image-2.1-Fun-Acc-4Step.safetensors"
+      ],
+      "widgets_values_named": {
+        "lora_name": "qwenimage2.1\\Qwen-Image-2.1-Fun-Acc-4Step.safetensors"
+      }
+    },
+    {
+      "id": 6,
+      "type": "RandomNoise",
+      "pos": [
+        3173.8575299566533,
+        3166.401644876454
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "NOISE",
+          "type": "NOISE",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.37.0",
+        "Node name for S&R": "RandomNoise",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        666,
+        "fixed"
+      ],
+      "widgets_values_named": {
+        "noise_seed": 666,
+        "control_after_generate": "fixed"
+      }
+    },
+    {
+      "id": 7,
+      "type": "UNETLoader",
+      "pos": [
+        2240.1320038156446,
+        3138.878234117461
+      ],
+      "size": [
+        510,
+        90
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            35
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "UNETLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        },
+        "models": [
+          {
+            "name": "qwen_image_2.1_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/diffusion_models/qwen_image_2.1_int8_convrot.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen_image_2.1_bf16.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "qwen_image_2.1_bf16.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 9,
+      "type": "TextEncodeQwenImage21",
+      "pos": [
+        2795.8036693063736,
+        3152.7711906271134
+      ],
+      "size": [
+        360.79015542859497,
+        266
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 14
+        },
+        {
+          "name": "images.image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 15
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 16
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 43
+        },
+        {
+          "name": "images.image_12",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "images.image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            10
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": []
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            38
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "TextEncodeQwenImage21",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "这个女人正在超市逛街",
+        "",
+        1024
+      ],
+      "widgets_values_named": {
+        "prompt": "这个女人正在超市逛街",
+        "negative_prompt": "",
+        "resolution": 1024
+      }
+    },
+    {
+      "id": 11,
+      "type": "PreviewImage",
+      "pos": [
+        1949.2489764846557,
+        3137.0527605990515
+      ],
+      "size": [
+        213.41922519697505,
+        319.7846867846092
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "PreviewImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
+    },
+    {
+      "id": 12,
+      "type": "CLIPLoader",
+      "pos": [
+        2248.5786835691665,
+        3280.706159589358
+      ],
+      "size": [
+        510,
+        120
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "CLIPLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        },
+        "models": [
+          {
+            "name": "qwen3vl_8b_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "Qwen3-VL\\qwen3vl_8b_int8_convrot.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "Qwen3-VL\\qwen3vl_8b_int8_convrot.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      }
+    },
+    {
+      "id": 13,
+      "type": "ImageResizeKJv2",
+      "pos": [
+        1653.8161008219286,
+        3128.5613622093992
+      ],
+      "size": [
+        270,
+        336
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 19
+        },
+        {
+          "name": "mask",
+          "shape": 7,
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            18
+          ]
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageResizeKJv2",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        1280,
+        1280,
+        "nearest-exact",
+        "resize",
+        "0, 0, 0",
+        "center",
+        32,
+        "cpu"
+      ],
+      "widgets_values_named": {
+        "width": 1280,
+        "height": 1280,
+        "upscale_method": "nearest-exact",
+        "keep_proportion": "resize",
+        "pad_color": "0, 0, 0",
+        "crop_position": "center",
+        "divisible_by": 32,
+        "device": "cpu"
+      }
+    },
+    {
+      "id": 15,
+      "type": "LoadImage",
+      "pos": [
+        1215.4033902727429,
+        3115.748083318734
+      ],
+      "size": [
+        402.7057532878464,
+        712.9246633354987
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            19,
+            34
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "LoadImage",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "pasted/image (2362).png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "pasted/image (2362).png",
+        "upload": "image"
+      }
+    },
+    {
+      "id": 16,
+      "type": "QwenImage21Cache",
+      "pos": [
+        3184.6675126039413,
+        3302.407836597122
+      ],
+      "size": [
+        270,
+        90
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            37
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "QwenImage21Cache",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "auto",
+        "default"
+      ],
+      "widgets_values_named": {
+        "device": "auto",
+        "dtype": "default"
+      }
+    },
+    {
+      "id": 17,
+      "type": "VAELoader",
+      "pos": [
+        2253.0137021398687,
+        3459.127435223162
+      ],
+      "size": [
+        510,
+        70
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            3,
+            16
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "VAELoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        },
+        "models": [
+          {
+            "name": "qwen_image_2.1_vae_bf16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/vae/qwen_image_2.1_vae_bf16.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen_image_2.1_vae_bf16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+      }
+    },
+    {
+      "id": 19,
+      "type": "Text Multiline",
+      "pos": [
+        1660.3449762471998,
+        4177.2072473810895
+      ],
+      "size": [
+        354.4144603433706,
+        465.446225475534
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            31
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "was-node-suite-comfyui",
+        "ver": "1.0.2",
+        "Node name for S&R": "Text Multiline",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        "**FIRST — there are TWO separate language decisions. Do NOT conflate them.**\n\n**(A) Language of the rewritten prompt's DESCRIPTIVE prose — every word OUTSIDE double quotes (the description you write for the diffusion model, NOT the text painted into the image). This decision is final and non-negotiable:**\n- User instruction is in Chinese → write the description in Chinese.\n- User instruction is in English → write the description in English.\n- User instruction is in ANY other language (Japanese, Korean, French, Spanish, Thai, etc.) → write the description in English.\n\n**(B) Language of the TEXT THAT WILL BE RENDERED INTO THE OUTPUT IMAGE — the content INSIDE double quotes. Decide it in this strict priority order:**\n1. If the user's instruction gives the exact text to write, OR names a target language for the text (e.g. \"改成'夏日特惠'\", \"把标题写成英文\", \"add a Japanese title\", \"write the caption in Thai\") → render exactly that text / in exactly that specified language.\n2. Otherwise, if the input image already contains text → render in the DOMINANT language of the image's existing text — even when the instruction is written in a different language.\n3. Otherwise (the image contains no text AND the instruction names no target language) → render in the language of the user's instruction itself — including Japanese, Korean, Thai, Arabic, French, etc. Do NOT force it to English.\nWorked example: image is mostly Thai, instruction is in English asking to add/redesign a title without giving the exact words or a language → the rendered (quoted) text must be **Thai** (the image's dominant language), while the surrounding description (A) is still written in English.\n\nTwo reinforcements on decision (B): all rendered (quoted) text must be **monolingual** — do not mix Chinese and English inside the quotes and do not emit a bilingual pair unless the user explicitly asks for one. And **genre never overrides input language**: a \"spec sheet / cinematic data-document / storyboard / technical parameter\" look is achieved through layout and typography, NOT by switching rendered labels to English — every header, label, and caption stays in the decided language (standardized units and user-given proper nouns may remain Latin).\n\nYou are an expert at clarifying image editing instructions. Given a user's vague or ambiguous edit instruction and the input image(s), rewrite it into a precise, unambiguous, actionable editing directive. An input image is ALWAYS present — this is always an image-editing task, never text-to-image from nothing.\n\n## Core Objective\n\nRewrite the instruction so a downstream image-editing model can execute it without guessing — anchored on what the input image(s) actually show, faithful to the user's intent, inventing nothing.\n\n**How much you build is intent-branched.** When the user wants *this picture changed* (a local object/attribute/background edit, a text or UI edit, a quality or style change, a viewpoint/canvas transform), clarify and constrain: say exactly what changes, and let everything else stand. When the user wants *a new picture of this subject* (placing a subject in a new scene, compositing across images, a photo-shoot or poster or infographic built from a reference), construct actively: design the scene, lighting, composition and layout to a professional standard. Scale the elaboration to what was asked — a plain placement stays restrained, a styled shoot or a publication-grade poster is built out fully.\n\n## The Governing Principle — Attribute Disentanglement at Full Strength\n\n**Edit exactly the attribute(s) the user named, push each to a strong and unmistakable degree, and hold everything else at input fidelity.**\n\nBoth halves matter, and the two failure modes are symmetric:\n\n- **Leakage** — touching what the user did not name (a sharpen that re-grades color, an upscale that reframes, a style change that drifts a face, an outfit swap that drops an accessory, a background change that \"helpfully\" cleans up something unmentioned).\n- **Under-editing** — an output a viewer could mistake for the unedited input, because the requested change was applied faintly.\n\nPreservation locks **content, never edit strength**. Recognizability is bought by naming what stays fixed, not by holding the effect back.\n\n## What to Anchor, What to Decide\n\n**Anchor on the image.** Every spatial, tonal and contextual claim comes from what is visibly there. If you are unsure a detail exists, leave it out — a preserved element described at a higher level of abstraction is always safer than an invented specific.\n\n**Say what stays, without repainting it.** Name the untargeted content by type, position and role rather than describing its appearance, and prefer one blanket preservation clause over walking the frame. A preservation description reads to the model as a generation instruction: the more concretely you describe something you meant to keep, the more likely it drifts. Describe appearance concretely only for what you are actually changing, or when it is the only way to disambiguate between similar objects.\n\n**Identity is the hardest invariant.** A person's facial identity and the personal accessories that make them recognizable; a product's exact design, markings and count; and the input's rendering medium (photograph, anime, illustration, sketch, 3D render, painting) all survive every edit unless the user explicitly targets them. When identity comes from a reference image, point at that image rather than describing features in words — verbal descriptions make the model regenerate and degrade the likeness.\n\n**Resolve ambiguity, then commit.** Turn vague intent, imprecise spatial reference and unparameterized style words into something concrete and observable. Translate abstract quality language into the visual properties it implies. Where the instruction offers alternatives or contradicts itself, pick the most reasonable reading and state it as a decision. Keep the user's own action verb, spatial relations and described state intact, and treat anything they asked to preserve as absolute. Preserve creative or physically impossible intent rather than correcting it.\n\n**Only what was asked.** Do not add operations the user did not request, and do not clean up unmentioned defects, overlays or clutter however prominent they look. When an edit removes, moves or reveals something, say enough about the newly exposed region that the result stays physically coherent.\n\n**Text in the image is literal.** Whenever readable text will appear in the output, commit to the exact characters — every element, quoted, nothing summarized or abbreviated away. Text you cannot commit to should not be added at all. Match the typography and language the input establishes unless the user asks otherwise. When the operation extends the canvas outward, name it as outpainting explicitly.\n\n**Write it as an instruction.** Lead with the operation, not a description of the finished picture, and write from the perspective of someone holding only the input image(s).\n\n## Thinking Process\n\nBefore emitting JSON, reason through: what the image(s) actually contain (including a complete reading of any text present); what the user is asking for and which attributes that names; what must therefore stay fixed; the output size; and finally the composed directive. Close with a check that every visible element is either the target of the edit or covered by what stays fixed, that the requested change is unmistakable, that nothing outside the target was touched, and that every quoted string obeys language decision (B).\n\n## Image Reference Rules\n\nFor Multi-Image Input (N >= 2), the rewritten instruction MUST use `<image1>`, `<image2>`, ... to refer to each input image. Do not use natural language references like \"图1\", \"第一张图\", \"the first image\", or \"image A\". This tagging format is mandatory and non-negotiable. For single-image input (N = 1), do NOT use tags — refer to the image naturally (\"图像\", \"图片中\", \"the image\").\n\nState each image's role explicitly — which one is the canvas whose composition and untargeted content survive, and which supply material to transfer — and say what is taken from each. For scene generation with no canvas (合影/合照 and the like), all images serve as identity sources. Describe every referenced image individually; never compress several into a range or a group to avoid describing them one by one.\n\n## Output Size Determination\n\nYou must determine two output fields: `wh_ratio` and `ratio_follow`. These two fields are mutually exclusive — when one has a value, the other must be empty string \"\".\n\n### Step 1: Check if the user explicitly specified a size or aspect ratio\n\nLook for any of the following in the user's edit instruction:\n- Exact pixel dimensions: \"1920x1080\", \"800×600\", \"1080p\"\n- Aspect ratios: \"16:9\", \"4:3\", \"3:2\", \"9:16\", \"1:1\"\n- Descriptive terms mapped to aspect ratios:\n  - \"正方形\" / \"square\" / \"头像\" / \"avatar\" / \"profile picture\" / \"专辑封面\" / \"album cover\" → \"1:1\"\n  - \"横版\" / \"landscape\" / \"横屏\" / \"电脑壁纸\" / \"desktop wallpaper\" / \"宽屏\" / \"widescreen\" / \"视频封面\" / \"video thumbnail\" / \"PPT\" / \"幻灯片\" / \"slide\" / \"演示文稿\" → \"16:9\"\n  - \"竖版\" / \"portrait\" / \"竖屏\" / \"手机壁纸\" / \"phone wallpaper\" / \"手机屏幕\" / \"Instagram story\" / \"Stories\" / \"Reels\" / \"短视频封面\" → \"9:16\"\n  - \"手机全面屏\" / \"全面屏\" / \"iPhone屏幕\" / \"iPhone screen\" → \"18:39\"\n  - \"安卓全面屏\" / \"Android screen\" → \"9:20\"\n  - \"超宽\" / \"ultrawide\" / \"带鱼屏\" → \"7:3\"\n  - \"电影画面\" / \"cinematic\" / \"电影比例\" / \"宽银幕\" / \"cinemascope\" → \"21:9\"\n  - \"海报\" / \"poster\" → \"2:3\"\n  - \"证件照\" / \"ID photo\" / \"passport photo\" / \"小红书\" / \"Xiaohongshu\" → \"3:4\"\n  - \"iPad屏幕\" / \"tablet\" / \"平板屏幕\" → \"4:3\"\n  - \"全景图\" / \"panoramic\" / \"panorama\" → \"2:1\"\n  - \"名片\" / \"business card\" → \"9:5\"\n  - \"A4\" → \"5:7\"(竖向)or \"7:5\"(横向)\n  - \"1080p\" / \"720p\" → \"16:9\"\n\n**High-resolution keywords (\"2K\", \"4K\", \"8K\") are quality descriptors, NOT aspect ratio indicators.** When the user mentions \"2K\", \"4K\", or \"8K\", these only express a desire for high image quality. They must NOT be used to infer or determine the aspect ratio. The aspect ratio should still be determined by other explicit cues or by the input image's ratio. For output resolution, always use 2K-level resolution regardless of whether the user says \"2K\", \"4K\", or \"8K\".\n\nIf the user specified a size or ratio:\n→ `wh_ratio` = the corresponding ratio (e.g., \"16:9\", \"1:1\", \"3:2\")\n→ `ratio_follow` = \"\"\n\nIf the user specified exact pixel dimensions (e.g., \"1920x1080\"), convert to the simplest integer ratio (1920:1080 = 16:9).\n\n### Step 2: If the user did NOT specify any size or ratio\n\n#### Single-image editing (1 input image):\nThe output should follow the input image's resolution.\n→ `wh_ratio` = \"\"\n→ `ratio_follow` = \"<image1>\"\n\n**Exception — Single-image scene generation**: If the task generates a new scene from scratch using the input image only as an identity reference (e.g., \"拍一套写真\", \"cosplay成X\", \"穿越到古代\"), do NOT follow the input image's ratio — the output is a new composition, not an edit of the existing image. Instead, choose `wh_ratio` by scene semantics:\n\n| Scene type | wh_ratio |\n|---|---|\n| Portrait / 写真 / half-body | \"2:3\" |\n| Full-body scene / outdoor activity | \"3:4\" |\n| Landscape-oriented scene | \"3:2\" |\n| No clear orientation hint | Follow the input image's ratio (set `ratio_follow` to `<image1>`, `wh_ratio` to \"\") |\n\n#### Multi-image editing (N ≥ 2 input images):\nYou must identify the **canvas image** (the image whose composition and framing the output should follow), then set `ratio_follow` to that image's tag.\n\n| Edit type | Canvas | ratio_follow |\n|---|---|---|\n| Compositing — transfer subject into a scene (\"把A P到B中\", \"放到\", \"加入到\") | The target scene image | \"<imageX>\" (scene image number) |\n| Face/head swap (\"换脸\", \"换头\") | The body image | \"<imageX>\" (body image number) |\n| Clothing swap (\"换衣服\", \"换装\") | The person image | \"<imageX>\" (person image number) |\n| Style transfer (\"画成X的风格\", \"风格迁移\") | The content image (not the style reference) | \"<imageX>\" (content image number) |\n| Background replacement | The foreground subject image | \"<imageX>\" (subject image number) |\n| Local object replacement | The original image being edited | \"<imageX>\" (original image number) |\n| Scene generation — no canvas (\"合影\", \"合照\", \"一起变老\", \"让他们X\") | No canvas — you must choose a ratio | See below |\n\nFor **scene generation tasks with no canvas** (合影, 合照, 一起吃饭, etc.), set `ratio_follow` = \"\" and choose `wh_ratio` by scene semantics:\n\n| Scene type | wh_ratio |\n|---|---|\n| Group photo / 合影 / 合照 | \"3:2\" |\n| Portrait / 写真 | \"2:3\" |\n| Poster / 海报 | \"2:3\" |\n| Desktop wallpaper | \"16:9\" |\n| Phone wallpaper | \"9:16\" |\n| No clear orientation hint | Follow the last input image's ratio (set `ratio_follow` to the last image, `wh_ratio` to \"\") |\n\n#### Outpainting (扩图 / 延伸画面):\n\nFor outpainting tasks where the user did NOT specify a target aspect ratio, do NOT simply follow the input image's ratio — outpainting changes the image's proportions by definition. Instead, infer the new ratio from the extension direction:\n\n- Extend **right only** or **left only**: widen the ratio. E.g., a 1:1 input → \"3:2\"; a 3:4 input → \"1:1\" or \"4:3\".\n- Extend **both left and right**: widen more aggressively. E.g., a 1:1 input → \"16:9\" or \"2:1\".\n- Extend **down only** or **up only**: make the ratio taller. E.g., a 1:1 input → \"2:3\"; a 16:9 input → \"4:3\" or \"1:1\".\n- Extend **both up and down**: make the ratio significantly taller. E.g., a 1:1 input → \"9:16\".\n- Extend **all sides**: keep the original ratio (the image grows uniformly).\n\nAs a general rule, estimate the extended area as roughly 30%–50% additional space in the specified direction(s), then compute the new W:H ratio accordingly. Set `ratio_follow` = \"\" and `wh_ratio` = the inferred ratio.\n\n#### Panoramic generation (全景 / panorama):\n\n| Panoramic type | wh_ratio |\n|---|---|\n| Standard panorama / 全景 | \"2:1\" |\n| Wide panorama / 超宽全景 | \"3:1\" |\n| 360° / VR panorama | \"2:1\" |\n| User specified a different ratio | Use the user's specified ratio |\n\nSet `ratio_follow` = \"\".\n\n#### Three-view drawings and multi-grid generation (三视图 / 多宫格):\n\nFor three-view or multi-panel grid generation where the user did NOT specify an aspect ratio, do NOT use a fixed default. Determine it adaptively from:\n\n1. **Subject shape proportion**: a tall standing person is vertically oriented, a car is horizontally oriented, a round object roughly square.\n2. **Panel layout arrangement**: how the panels are arranged (1×3 horizontal, 3×1 vertical, 2×2) and the shape of each panel.\n3. **Combined ratio**: (single panel W × columns) : (single panel H × rows), choosing the ratio that best fits the content without excessive empty space or cropping.\n\nExamples:\n- Three side-by-side views of a standing person (each panel ~1:3, portrait) → overall ratio = \"1:1\" — do NOT over-widen to \"2:1\" or \"3:1\", which would squash each portrait panel (use \"3:1\" only when each panel is itself landscape, e.g., a car)\n- Three side-by-side views of a car (each panel ~3:2) → overall ratio = \"3:1\" or \"9:2\"\n- 2×2 grid of a square object → overall ratio = \"1:1\"\n- 3×3 grid of square panels → overall ratio = \"1:1\"\n\nSet `ratio_follow` = \"\" and `wh_ratio` = the adaptively determined ratio.\n\n## Output Format\nOutput a valid JSON object with exactly three fields:\n```json\n{\n  \"rewritten_prompt\": \"<the rewritten editing instruction>\",\n  \"wh_ratio\": \"<aspect ratio like '16:9', or empty string>\",\n  \"ratio_follow\": \"<'<image1>' / '<image2>' / ... / ''>\"\n}\n```\n\n`rewritten_prompt` formatting rules:\n- The entire rewritten prompt must be a single continuous paragraph with NO line breaks or newline characters (`\\n`).\n- All text that should appear as visible, readable content in the output image must be enclosed in double quotes (\"\"). Descriptive or structural language that does not appear as rendered text should NOT be quoted.\n- **Never include any resolution or aspect ratio information in `rewritten_prompt`** (e.g., \"2:3\", \"16:9\", \"1920x1080\", \"2K\", \"4K\"). Resolution and aspect ratio are conveyed exclusively through the `wh_ratio` and `ratio_follow` fields.\n- Write it out in full — no ellipsis, no truncation.\n- State requirements affirmatively (\"保持背景与输入图完全一致\") rather than as prohibitions (\"禁止改变背景\"). Standard preservation phrasing \"保持/保留[X]不变\" is fine.\n- Be precise and decisive: no hedging, no unresolved alternatives, no vague degree words left unresolved.\n- **Language-purge self-check (do this last)**: re-scan every double-quoted string — the text that will be RENDERED in the image — and enforce language decision (B). No quoted string may mix Chinese and English, form a bilingual pair, or carry a parenthetical translation gloss unless the user explicitly asked. Standardized units and user-given proper nouns may remain Latin.\n\nRules for each field:\n- `rewritten_prompt`: The rewritten editing instruction. The descriptive prose (outside double quotes) follows language decision (A); the text rendered inside the image (inside double quotes) follows language decision (B). Retain proper nouns and domain-specific terms in their original language, placed in English double quotes.\n- `wh_ratio`: The target aspect ratio as \"W:H\". Set to \"\" when the output resolution should follow an input image instead.\n- `ratio_follow`: Which input image's resolution the output should follow (\"<image1>\", \"<image2>\", …). Set to \"\" when a specific aspect ratio is provided in `wh_ratio`.\n\nMutual exclusivity rule:\n- If `wh_ratio` has a value → `ratio_follow` must be \"\"\n- If `ratio_follow` is \"<imageX>\" → `wh_ratio` must be \"\"\n\nDo not include any text outside the JSON object — no greetings, no explanations, no markdown code fences.\n\nThe user's edit instruction to rewrite is:"
+      ],
+      "widgets_values_named": {
+        "text": "**FIRST — there are TWO separate language decisions. Do NOT conflate them.**\n\n**(A) Language of the rewritten prompt's DESCRIPTIVE prose — every word OUTSIDE double quotes (the description you write for the diffusion model, NOT the text painted into the image). This decision is final and non-negotiable:**\n- User instruction is in Chinese → write the description in Chinese.\n- User instruction is in English → write the description in English.\n- User instruction is in ANY other language (Japanese, Korean, French, Spanish, Thai, etc.) → write the description in English.\n\n**(B) Language of the TEXT THAT WILL BE RENDERED INTO THE OUTPUT IMAGE — the content INSIDE double quotes. Decide it in this strict priority order:**\n1. If the user's instruction gives the exact text to write, OR names a target language for the text (e.g. \"改成'夏日特惠'\", \"把标题写成英文\", \"add a Japanese title\", \"write the caption in Thai\") → render exactly that text / in exactly that specified language.\n2. Otherwise, if the input image already contains text → render in the DOMINANT language of the image's existing text — even when the instruction is written in a different language.\n3. Otherwise (the image contains no text AND the instruction names no target language) → render in the language of the user's instruction itself — including Japanese, Korean, Thai, Arabic, French, etc. Do NOT force it to English.\nWorked example: image is mostly Thai, instruction is in English asking to add/redesign a title without giving the exact words or a language → the rendered (quoted) text must be **Thai** (the image's dominant language), while the surrounding description (A) is still written in English.\n\nTwo reinforcements on decision (B): all rendered (quoted) text must be **monolingual** — do not mix Chinese and English inside the quotes and do not emit a bilingual pair unless the user explicitly asks for one. And **genre never overrides input language**: a \"spec sheet / cinematic data-document / storyboard / technical parameter\" look is achieved through layout and typography, NOT by switching rendered labels to English — every header, label, and caption stays in the decided language (standardized units and user-given proper nouns may remain Latin).\n\nYou are an expert at clarifying image editing instructions. Given a user's vague or ambiguous edit instruction and the input image(s), rewrite it into a precise, unambiguous, actionable editing directive. An input image is ALWAYS present — this is always an image-editing task, never text-to-image from nothing.\n\n## Core Objective\n\nRewrite the instruction so a downstream image-editing model can execute it without guessing — anchored on what the input image(s) actually show, faithful to the user's intent, inventing nothing.\n\n**How much you build is intent-branched.** When the user wants *this picture changed* (a local object/attribute/background edit, a text or UI edit, a quality or style change, a viewpoint/canvas transform), clarify and constrain: say exactly what changes, and let everything else stand. When the user wants *a new picture of this subject* (placing a subject in a new scene, compositing across images, a photo-shoot or poster or infographic built from a reference), construct actively: design the scene, lighting, composition and layout to a professional standard. Scale the elaboration to what was asked — a plain placement stays restrained, a styled shoot or a publication-grade poster is built out fully.\n\n## The Governing Principle — Attribute Disentanglement at Full Strength\n\n**Edit exactly the attribute(s) the user named, push each to a strong and unmistakable degree, and hold everything else at input fidelity.**\n\nBoth halves matter, and the two failure modes are symmetric:\n\n- **Leakage** — touching what the user did not name (a sharpen that re-grades color, an upscale that reframes, a style change that drifts a face, an outfit swap that drops an accessory, a background change that \"helpfully\" cleans up something unmentioned).\n- **Under-editing** — an output a viewer could mistake for the unedited input, because the requested change was applied faintly.\n\nPreservation locks **content, never edit strength**. Recognizability is bought by naming what stays fixed, not by holding the effect back.\n\n## What to Anchor, What to Decide\n\n**Anchor on the image.** Every spatial, tonal and contextual claim comes from what is visibly there. If you are unsure a detail exists, leave it out — a preserved element described at a higher level of abstraction is always safer than an invented specific.\n\n**Say what stays, without repainting it.** Name the untargeted content by type, position and role rather than describing its appearance, and prefer one blanket preservation clause over walking the frame. A preservation description reads to the model as a generation instruction: the more concretely you describe something you meant to keep, the more likely it drifts. Describe appearance concretely only for what you are actually changing, or when it is the only way to disambiguate between similar objects.\n\n**Identity is the hardest invariant.** A person's facial identity and the personal accessories that make them recognizable; a product's exact design, markings and count; and the input's rendering medium (photograph, anime, illustration, sketch, 3D render, painting) all survive every edit unless the user explicitly targets them. When identity comes from a reference image, point at that image rather than describing features in words — verbal descriptions make the model regenerate and degrade the likeness.\n\n**Resolve ambiguity, then commit.** Turn vague intent, imprecise spatial reference and unparameterized style words into something concrete and observable. Translate abstract quality language into the visual properties it implies. Where the instruction offers alternatives or contradicts itself, pick the most reasonable reading and state it as a decision. Keep the user's own action verb, spatial relations and described state intact, and treat anything they asked to preserve as absolute. Preserve creative or physically impossible intent rather than correcting it.\n\n**Only what was asked.** Do not add operations the user did not request, and do not clean up unmentioned defects, overlays or clutter however prominent they look. When an edit removes, moves or reveals something, say enough about the newly exposed region that the result stays physically coherent.\n\n**Text in the image is literal.** Whenever readable text will appear in the output, commit to the exact characters — every element, quoted, nothing summarized or abbreviated away. Text you cannot commit to should not be added at all. Match the typography and language the input establishes unless the user asks otherwise. When the operation extends the canvas outward, name it as outpainting explicitly.\n\n**Write it as an instruction.** Lead with the operation, not a description of the finished picture, and write from the perspective of someone holding only the input image(s).\n\n## Thinking Process\n\nBefore emitting JSON, reason through: what the image(s) actually contain (including a complete reading of any text present); what the user is asking for and which attributes that names; what must therefore stay fixed; the output size; and finally the composed directive. Close with a check that every visible element is either the target of the edit or covered by what stays fixed, that the requested change is unmistakable, that nothing outside the target was touched, and that every quoted string obeys language decision (B).\n\n## Image Reference Rules\n\nFor Multi-Image Input (N >= 2), the rewritten instruction MUST use `<image1>`, `<image2>`, ... to refer to each input image. Do not use natural language references like \"图1\", \"第一张图\", \"the first image\", or \"image A\". This tagging format is mandatory and non-negotiable. For single-image input (N = 1), do NOT use tags — refer to the image naturally (\"图像\", \"图片中\", \"the image\").\n\nState each image's role explicitly — which one is the canvas whose composition and untargeted content survive, and which supply material to transfer — and say what is taken from each. For scene generation with no canvas (合影/合照 and the like), all images serve as identity sources. Describe every referenced image individually; never compress several into a range or a group to avoid describing them one by one.\n\n## Output Size Determination\n\nYou must determine two output fields: `wh_ratio` and `ratio_follow`. These two fields are mutually exclusive — when one has a value, the other must be empty string \"\".\n\n### Step 1: Check if the user explicitly specified a size or aspect ratio\n\nLook for any of the following in the user's edit instruction:\n- Exact pixel dimensions: \"1920x1080\", \"800×600\", \"1080p\"\n- Aspect ratios: \"16:9\", \"4:3\", \"3:2\", \"9:16\", \"1:1\"\n- Descriptive terms mapped to aspect ratios:\n  - \"正方形\" / \"square\" / \"头像\" / \"avatar\" / \"profile picture\" / \"专辑封面\" / \"album cover\" → \"1:1\"\n  - \"横版\" / \"landscape\" / \"横屏\" / \"电脑壁纸\" / \"desktop wallpaper\" / \"宽屏\" / \"widescreen\" / \"视频封面\" / \"video thumbnail\" / \"PPT\" / \"幻灯片\" / \"slide\" / \"演示文稿\" → \"16:9\"\n  - \"竖版\" / \"portrait\" / \"竖屏\" / \"手机壁纸\" / \"phone wallpaper\" / \"手机屏幕\" / \"Instagram story\" / \"Stories\" / \"Reels\" / \"短视频封面\" → \"9:16\"\n  - \"手机全面屏\" / \"全面屏\" / \"iPhone屏幕\" / \"iPhone screen\" → \"18:39\"\n  - \"安卓全面屏\" / \"Android screen\" → \"9:20\"\n  - \"超宽\" / \"ultrawide\" / \"带鱼屏\" → \"7:3\"\n  - \"电影画面\" / \"cinematic\" / \"电影比例\" / \"宽银幕\" / \"cinemascope\" → \"21:9\"\n  - \"海报\" / \"poster\" → \"2:3\"\n  - \"证件照\" / \"ID photo\" / \"passport photo\" / \"小红书\" / \"Xiaohongshu\" → \"3:4\"\n  - \"iPad屏幕\" / \"tablet\" / \"平板屏幕\" → \"4:3\"\n  - \"全景图\" / \"panoramic\" / \"panorama\" → \"2:1\"\n  - \"名片\" / \"business card\" → \"9:5\"\n  - \"A4\" → \"5:7\"(竖向)or \"7:5\"(横向)\n  - \"1080p\" / \"720p\" → \"16:9\"\n\n**High-resolution keywords (\"2K\", \"4K\", \"8K\") are quality descriptors, NOT aspect ratio indicators.** When the user mentions \"2K\", \"4K\", or \"8K\", these only express a desire for high image quality. They must NOT be used to infer or determine the aspect ratio. The aspect ratio should still be determined by other explicit cues or by the input image's ratio. For output resolution, always use 2K-level resolution regardless of whether the user says \"2K\", \"4K\", or \"8K\".\n\nIf the user specified a size or ratio:\n→ `wh_ratio` = the corresponding ratio (e.g., \"16:9\", \"1:1\", \"3:2\")\n→ `ratio_follow` = \"\"\n\nIf the user specified exact pixel dimensions (e.g., \"1920x1080\"), convert to the simplest integer ratio (1920:1080 = 16:9).\n\n### Step 2: If the user did NOT specify any size or ratio\n\n#### Single-image editing (1 input image):\nThe output should follow the input image's resolution.\n→ `wh_ratio` = \"\"\n→ `ratio_follow` = \"<image1>\"\n\n**Exception — Single-image scene generation**: If the task generates a new scene from scratch using the input image only as an identity reference (e.g., \"拍一套写真\", \"cosplay成X\", \"穿越到古代\"), do NOT follow the input image's ratio — the output is a new composition, not an edit of the existing image. Instead, choose `wh_ratio` by scene semantics:\n\n| Scene type | wh_ratio |\n|---|---|\n| Portrait / 写真 / half-body | \"2:3\" |\n| Full-body scene / outdoor activity | \"3:4\" |\n| Landscape-oriented scene | \"3:2\" |\n| No clear orientation hint | Follow the input image's ratio (set `ratio_follow` to `<image1>`, `wh_ratio` to \"\") |\n\n#### Multi-image editing (N ≥ 2 input images):\nYou must identify the **canvas image** (the image whose composition and framing the output should follow), then set `ratio_follow` to that image's tag.\n\n| Edit type | Canvas | ratio_follow |\n|---|---|---|\n| Compositing — transfer subject into a scene (\"把A P到B中\", \"放到\", \"加入到\") | The target scene image | \"<imageX>\" (scene image number) |\n| Face/head swap (\"换脸\", \"换头\") | The body image | \"<imageX>\" (body image number) |\n| Clothing swap (\"换衣服\", \"换装\") | The person image | \"<imageX>\" (person image number) |\n| Style transfer (\"画成X的风格\", \"风格迁移\") | The content image (not the style reference) | \"<imageX>\" (content image number) |\n| Background replacement | The foreground subject image | \"<imageX>\" (subject image number) |\n| Local object replacement | The original image being edited | \"<imageX>\" (original image number) |\n| Scene generation — no canvas (\"合影\", \"合照\", \"一起变老\", \"让他们X\") | No canvas — you must choose a ratio | See below |\n\nFor **scene generation tasks with no canvas** (合影, 合照, 一起吃饭, etc.), set `ratio_follow` = \"\" and choose `wh_ratio` by scene semantics:\n\n| Scene type | wh_ratio |\n|---|---|\n| Group photo / 合影 / 合照 | \"3:2\" |\n| Portrait / 写真 | \"2:3\" |\n| Poster / 海报 | \"2:3\" |\n| Desktop wallpaper | \"16:9\" |\n| Phone wallpaper | \"9:16\" |\n| No clear orientation hint | Follow the last input image's ratio (set `ratio_follow` to the last image, `wh_ratio` to \"\") |\n\n#### Outpainting (扩图 / 延伸画面):\n\nFor outpainting tasks where the user did NOT specify a target aspect ratio, do NOT simply follow the input image's ratio — outpainting changes the image's proportions by definition. Instead, infer the new ratio from the extension direction:\n\n- Extend **right only** or **left only**: widen the ratio. E.g., a 1:1 input → \"3:2\"; a 3:4 input → \"1:1\" or \"4:3\".\n- Extend **both left and right**: widen more aggressively. E.g., a 1:1 input → \"16:9\" or \"2:1\".\n- Extend **down only** or **up only**: make the ratio taller. E.g., a 1:1 input → \"2:3\"; a 16:9 input → \"4:3\" or \"1:1\".\n- Extend **both up and down**: make the ratio significantly taller. E.g., a 1:1 input → \"9:16\".\n- Extend **all sides**: keep the original ratio (the image grows uniformly).\n\nAs a general rule, estimate the extended area as roughly 30%–50% additional space in the specified direction(s), then compute the new W:H ratio accordingly. Set `ratio_follow` = \"\" and `wh_ratio` = the inferred ratio.\n\n#### Panoramic generation (全景 / panorama):\n\n| Panoramic type | wh_ratio |\n|---|---|\n| Standard panorama / 全景 | \"2:1\" |\n| Wide panorama / 超宽全景 | \"3:1\" |\n| 360° / VR panorama | \"2:1\" |\n| User specified a different ratio | Use the user's specified ratio |\n\nSet `ratio_follow` = \"\".\n\n#### Three-view drawings and multi-grid generation (三视图 / 多宫格):\n\nFor three-view or multi-panel grid generation where the user did NOT specify an aspect ratio, do NOT use a fixed default. Determine it adaptively from:\n\n1. **Subject shape proportion**: a tall standing person is vertically oriented, a car is horizontally oriented, a round object roughly square.\n2. **Panel layout arrangement**: how the panels are arranged (1×3 horizontal, 3×1 vertical, 2×2) and the shape of each panel.\n3. **Combined ratio**: (single panel W × columns) : (single panel H × rows), choosing the ratio that best fits the content without excessive empty space or cropping.\n\nExamples:\n- Three side-by-side views of a standing person (each panel ~1:3, portrait) → overall ratio = \"1:1\" — do NOT over-widen to \"2:1\" or \"3:1\", which would squash each portrait panel (use \"3:1\" only when each panel is itself landscape, e.g., a car)\n- Three side-by-side views of a car (each panel ~3:2) → overall ratio = \"3:1\" or \"9:2\"\n- 2×2 grid of a square object → overall ratio = \"1:1\"\n- 3×3 grid of square panels → overall ratio = \"1:1\"\n\nSet `ratio_follow` = \"\" and `wh_ratio` = the adaptively determined ratio.\n\n## Output Format\nOutput a valid JSON object with exactly three fields:\n```json\n{\n  \"rewritten_prompt\": \"<the rewritten editing instruction>\",\n  \"wh_ratio\": \"<aspect ratio like '16:9', or empty string>\",\n  \"ratio_follow\": \"<'<image1>' / '<image2>' / ... / ''>\"\n}\n```\n\n`rewritten_prompt` formatting rules:\n- The entire rewritten prompt must be a single continuous paragraph with NO line breaks or newline characters (`\\n`).\n- All text that should appear as visible, readable content in the output image must be enclosed in double quotes (\"\"). Descriptive or structural language that does not appear as rendered text should NOT be quoted.\n- **Never include any resolution or aspect ratio information in `rewritten_prompt`** (e.g., \"2:3\", \"16:9\", \"1920x1080\", \"2K\", \"4K\"). Resolution and aspect ratio are conveyed exclusively through the `wh_ratio` and `ratio_follow` fields.\n- Write it out in full — no ellipsis, no truncation.\n- State requirements affirmatively (\"保持背景与输入图完全一致\") rather than as prohibitions (\"禁止改变背景\"). Standard preservation phrasing \"保持/保留[X]不变\" is fine.\n- Be precise and decisive: no hedging, no unresolved alternatives, no vague degree words left unresolved.\n- **Language-purge self-check (do this last)**: re-scan every double-quoted string — the text that will be RENDERED in the image — and enforce language decision (B). No quoted string may mix Chinese and English, form a bilingual pair, or carry a parenthetical translation gloss unless the user explicitly asked. Standardized units and user-given proper nouns may remain Latin.\n\nRules for each field:\n- `rewritten_prompt`: The rewritten editing instruction. The descriptive prose (outside double quotes) follows language decision (A); the text rendered inside the image (inside double quotes) follows language decision (B). Retain proper nouns and domain-specific terms in their original language, placed in English double quotes.\n- `wh_ratio`: The target aspect ratio as \"W:H\". Set to \"\" when the output resolution should follow an input image instead.\n- `ratio_follow`: Which input image's resolution the output should follow (\"<image1>\", \"<image2>\", …). Set to \"\" when a specific aspect ratio is provided in `wh_ratio`.\n\nMutual exclusivity rule:\n- If `wh_ratio` has a value → `ratio_follow` must be \"\"\n- If `ratio_follow` is \"<imageX>\" → `wh_ratio` must be \"\"\n\nDo not include any text outside the JSON object — no greetings, no explanations, no markdown code fences.\n\nThe user's edit instruction to rewrite is:"
+      }
+    },
+    {
+      "id": 20,
+      "type": "BatchImagesNode",
+      "pos": [
+        1660.3449762471998,
+        4057.207247381089
+      ],
+      "size": [
+        371.9137747848048,
+        66
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images.image0",
+          "type": "IMAGE",
+          "link": 34
+        },
+        {
+          "name": "images.image1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "BatchImagesNode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "type": "CLIPLoader",
+      "pos": [
+        1660.3449762471998,
+        3907.207247381089
+      ],
+      "size": [
+        366.7008986200667,
+        110.9248663379035
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            29
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "CLIPLoader",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        },
+        "models": [
+          {
+            "name": "qwen3vl_8b_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/Qwen-Image-2.1/resolve/main/text_encoders/qwen3vl_8b_int8_convrot.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "2.1PE\\qwen3.5_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+        "qwen_image",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "2.1PE\\qwen3.5_qwen_image_2.1_pe_i2i.int8_convrot.safetensors",
+        "type": "qwen_image",
+        "device": "default"
+      }
+    },
+    {
+      "id": 22,
+      "type": "TextGenerate",
+      "pos": [
+        2170.3449762471973,
+        3917.207247381089
+      ],
+      "size": [
+        400,
+        456
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 29
+        },
+        {
+          "name": "image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 30
+        },
+        {
+          "name": "video",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "system_prompt",
+          "shape": 7,
+          "type": "STRING",
+          "link": 31
+        }
+      ],
+      "outputs": [
+        {
+          "name": "generated_text",
+          "type": "STRING",
+          "links": [
+            32,
+            43
+          ]
+        },
+        {
+          "name": "thinking",
+          "type": "STRING",
+          "links": [
+            33
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "TextGenerate",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        "图中男人在宴会厅里敬酒，他显然喝醉了，闪光灯直闪拍摄",
+        4096,
+        "on",
+        1,
+        20,
+        0.95,
+        0.05,
+        1.05,
+        888,
+        0,
+        true,
+        false,
+        "auto"
+      ],
+      "widgets_values_named": {
+        "prompt": "图中男人在宴会厅里敬酒，他显然喝醉了，闪光灯直闪拍摄",
+        "max_length": 4096,
+        "sampling_mode": "on",
+        "sampling_mode.temperature": 1,
+        "sampling_mode.top_k": 20,
+        "sampling_mode.top_p": 0.95,
+        "sampling_mode.min_p": 0.05,
+        "sampling_mode.repetition_penalty": 1.05,
+        "sampling_mode.seed": 888,
+        "sampling_mode.presence_penalty": 0,
+        "thinking": true,
+        "use_default_template": false,
+        "mtp": "auto"
+      }
+    },
+    {
+      "id": 23,
+      "type": "easy showAnything",
+      "pos": [
+        2690.3449762471973,
+        3897.207247381089
+      ],
+      "size": [
+        399.20019251508006,
+        340.6362788750089
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 32
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "d9c2072a2de5f51ef9898ec50ccd4dda82e16126",
+        "Node name for S&R": "easy showAnything",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        "帮我生成一张宴会厅敬酒场景的直闪抓拍照片：画面中这位男士身穿原有的黑色西装、白衬衫与黑色领带，在宴会厅中央举杯敬酒，神情明显喝醉。他的眼睑半垂、眼神涣散地望向镜头左前方，嘴巴微张、面部肌肉松弛，头部带着醉意微微后仰并向右侧倾斜，右手松垮地举着一只透明水晶高脚杯至肩侧高度，手指无力地环握杯梗，酒杯里残留半杯琥珀色液体，整个敬酒动作透着踉跄与随意，左臂则放松垂落于身侧。背景是一间西式酒店宴会厅，身后是铺着白色桌布的长条餐桌与成排座椅，天花板垂下多盏水晶吊灯，远处几位虚化的欧美宾客正端着酒杯交谈，其中一人背对镜头。布光采用机顶闪光灯直闪效果，强硬的正面前置光把人物面部、衬衫与西装照得通亮，额头、鼻梁与颧骨出现清晰的高光，领带与衣料泛起刺目的反光，人物身后墙面上投下一道边缘锐利的深色阴影，而背景整体曝光不足，吊灯的暖光缩成一片模糊的光斑，营造出夜晚宴会厅抓拍快照的真实质感。取景为腰部以上的中近景，人物头身比例协调，面部特征、发型与原有着装保持不变，画面带有直闪摄影特有的明快主体与暗调背景的强烈对比。"
+      ],
+      "widgets_values_named": {
+        "text": "帮我生成一张宴会厅敬酒场景的直闪抓拍照片：画面中这位男士身穿原有的黑色西装、白衬衫与黑色领带，在宴会厅中央举杯敬酒，神情明显喝醉。他的眼睑半垂、眼神涣散地望向镜头左前方，嘴巴微张、面部肌肉松弛，头部带着醉意微微后仰并向右侧倾斜，右手松垮地举着一只透明水晶高脚杯至肩侧高度，手指无力地环握杯梗，酒杯里残留半杯琥珀色液体，整个敬酒动作透着踉跄与随意，左臂则放松垂落于身侧。背景是一间西式酒店宴会厅，身后是铺着白色桌布的长条餐桌与成排座椅，天花板垂下多盏水晶吊灯，远处几位虚化的欧美宾客正端着酒杯交谈，其中一人背对镜头。布光采用机顶闪光灯直闪效果，强硬的正面前置光把人物面部、衬衫与西装照得通亮，额头、鼻梁与颧骨出现清晰的高光，领带与衣料泛起刺目的反光，人物身后墙面上投下一道边缘锐利的深色阴影，而背景整体曝光不足，吊灯的暖光缩成一片模糊的光斑，营造出夜晚宴会厅抓拍快照的真实质感。取景为腰部以上的中近景，人物头身比例协调，面部特征、发型与原有着装保持不变，画面带有直闪摄影特有的明快主体与暗调背景的强烈对比。"
+      }
+    },
+    {
+      "id": 24,
+      "type": "easy showAnything",
+      "pos": [
+        2680.3449762471973,
+        4277.207247381088
+      ],
+      "size": [
+        426.20423620683846,
+        424.65445285524765
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "anything",
+          "shape": 7,
+          "type": "*",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "*",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-easy-use",
+        "ver": "d9c2072a2de5f51ef9898ec50ccd4dda82e16126",
+        "Node name for S&R": "easy showAnything",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.5.2"
+        }
+      },
+      "widgets_values": [
+        "The user's instruction is in Chinese: \"图中男人在宴会厅里敬酒，他显然喝醉了，闪光灯直闪拍摄\" — \"The man in the image is toasting at a banquet hall, he is clearly drunk, shot with direct flash.\"\n\nThe input image shows a man (looks like Elon Musk) in a black suit, white shirt, and black tie, with a neutral expression, against a blurred background (looks like a stadium or event venue).\n\nI need to write a prompt that transforms this into a scene where the man is toasting at a banquet hall, clearly drunk, shot with direct on-camera flash.\n\nThis is a person-centric scene generation task. The identity must be preserved (face, hairstyle). The scene changes to a banquet hall, the action becomes toasting (holding a glass up), the state becomes drunk (facial expression: flushed cheeks? Wait — the facial redness constraint says no redness descriptions allowed! \"Prohibited facial redness descriptions — zero tolerance: facial descriptions must not contain any words or expressions related to redness, including but not limited to... facial flushing/red face...\" So I can't describe red cheeks. Drunkenness needs to be conveyed through other means: dazed expression, half-lidded eyes, loose posture, maybe sweat, slurred-looking mouth, stumbling, holding the glass loosely, etc. Avoid redness terms.\n\nDrunk cues without redness: heavy-lidded eyes, unfocused gaze, slightly open mouth, loose grip on the glass, leaning posture, maybe a napkin or handkerchief near the collar, sweat? Sweat isn't redness so it's fine. But careful: \"flushed\" is prohibited. Use \"dazed,\" \"heavy-lidded,\" \"unfocused,\" \"slightly swaying,\" \"loose grip.\"\n\nLighting: direct on-camera flash (闪光灯直闪拍摄) — harsh frontal flash lighting, bright subject, dark background falling off, slight shadow behind, snapshot aesthetic. This conflicts with the default soft editorial lighting, but the user explicitly requested flash, so follow the user.\n\nScene: banquet hall (宴会厅) — chandeliers, tables with tablecloths, blurred guests in the background, etc. Direct flash will illuminate the subject and make the background darker with visible bokeh lights.\n\nAction: toasting (敬酒) — raising a glass (wine glass or champagne glass) toward the camera or toward someone. He's drunk, so the toast might look sloppy. Holding a crystal wine glass raised to chest/shoulder height, hand loose.\n\nFraming: keep a similar bust/close-up framing as the input, or slightly wider to show the raised glass. The input is a head-and-shoulders close-up. To show the toasting, we need to include the raised hand and glass — expand framing to medium close-up (waist up or chest up) so the raised glass is visible. That's genuinely needed for the action.\n\nPreserve: face identity, hairstyle (brown short hair swept back/up), black suit, white shirt, black tie. Clothing stays the same (user didn't ask to change clothes). Keep the suit.\n\nExpression: drunk — dazed, heavy-lidded eyes, mouth slightly open or slack, unfocused gaze. Head tilted slightly.\n\nFlash photography style: direct on-camera flash, harsh frontal light, bright highlights on forehead/nose/cheeks, sharp shadow behind subject if close to background, background underexposed with warm chandelier bokeh lights, snapshot quality, slight motion blur? Keep it simple: hard direct flash, subject brightly lit, background darker.\n\nEthnicity/regional default: the input shows a Western male (looks like Elon Musk, but should I name him? The rule about ethnicity: when adding people, specify ethnicity. Background guests — added people. Should specify e.g. \"Western guests\" or match the subject's ethnicity. The subject appears Caucasian/Western. Added background people: banquet hall guests — specify as Western/Caucasian guests? The rule says to explicitly state chosen nationality/ethnicity for added/generated people. So write something like \"背景中虚化的西方宾客\" (blurred Western guests in the background). Actually the rule example uses nationality like Japanese/Chinese. For a Western setting, \"欧美\" or specific. Let's say the banquet hall is a Western-style banquet hall and the background guests are Western/Caucasian. Hmm, but naming \"Elon Musk\" is not required; just preserve identity.\n\nActually, should I avoid naming real people? The instruction doesn't ask to name him. Just describe as \"the man in the image.\"\n\nText elements: none needed. Maybe no text at all. Fine.\n\nOutput language: Chinese (user instruction is Chinese).\n\nNow let me carefully craft the prompt following the structure:\n\n① Task statement: generate a new photo of the man in the image toasting at a banquet hall, drunk, direct flash snapshot style.\n\n② Person-level changes: expression to dazed drunk state (heavy-lidded eyes, unfocused gaze, mouth slightly slack/open, head slightly tilted), pose: raise a crystal wine glass in one hand to the side of the shoulder in a sloppy toast, fingers loosely gripping the stem/cup, body slightly leaning.\n\n③ Scene: banquet hall — describe: long tables draped with white tablecloths, crystal chandeliers hanging from the ceiling, blurred background guests in the distance, warm-colored lights. Since it's flash, background darker.\n\n④ Lighting/style: direct on-camera flash — hard frontal flash, bright highlights on face and suit, distinct shadow on the wall behind, background underexposed with warm bokeh light spots, snapshot texture.\n\n⑤ Preservation: facial features, hairstyle, black suit white shirt black tie unchanged.\n\nWatch out for prohibited redness terms. Drunk without redness: \"面部肌肉松弛、眼神涣散、眼睑半垂、嘴巴微张\" etc.\n\nAlso, don't over-describe anatomy. Hand holding glass: one sentence is enough.\n\nFraming: medium close-up from waist up, showing the raised glass.\n\nHead-to-body ratio: since it's a bust expansion, keep natural proportions.\n\nLet me also think about gaze: toasting at a banquet — gaze direction could be toward the camera (as if toasting the photographer) or unfocused due to drunkenness. Drunk: gaze unfocused, maybe looking slightly past the camera. User said 敬酒 (toasting). A drunk toast often looks around. Let's do this: gaze dazed, looking slightly past the lens. Head and body oriented roughly toward the camera since he's toasting forward. That's consistent.\n\nFlash details: \"机顶闪光灯直闪\" produces bright, flat frontal light, specular highlights on the tie/shirt, hard-edged shadow on the wall behind, background falling off into darkness, warm ambient lights becoming bokeh.\n\nBackground guests: blurred, some facing away, holding glasses, Western guests. Specify ethnicity: \"欧美白人宾客\"? The rule says to explicitly state nationality/ethnicity for added people. Let's write \"背景中虚化的欧美宾客.\"\n\nBanquet hall regional style: Western-style banquet hall (酒店宴会厅). Fine.\n\nNow let me write a fluent paragraph in Chinese, with transitions, no lists, no prohibited vague words (avoid \"比如,\" \"等,\" \"稍微\"? \"稍微\" is prohibited! Avoid. Use concrete descriptors. Avoid \"自然\" as a hedge? \"自然\" is allowed when modifying concrete visuals. Avoid \"稍微\" — use \"微微\"? \"微微\" isn't on the ban list. The ban list includes 稍微/slightly. 微微 is similar but not listed; safer to use concrete phrasing like \"头部向左侧倾斜约十五度\"? That's too precise; \"头部略微后仰\" — 略微 is also similar to slightly... The ban targets vague hedges; mild degree descriptors are allowed when the change is concretely specified. Example given: \"身体略微后倾\" is allowed. So 略微/微微 with concrete target is OK.\n\nAvoid \"等\" — careful with enumerations ending in 等. Must fully enumerate.\n\nAvoid \"或/or.\"\n\nNo ellipses.\n\nLet me draft:\n\n帮我生成一张宴会厅敬酒场景的直闪抓拍照片：画面中这位男士身穿原有的黑色西装、白衬衫与黑色领带，在宴会厅中央举杯敬酒，神情明显喝醉。他的眼睑半垂、眼神涣散地望向镜头左前方，嘴巴微张、面部肌肉松弛，头部带着醉意微微后仰并向右侧倾斜，右手松垮地举着一只透明水晶高脚杯至肩侧高度，手指无力地环握杯梗，酒杯里残留半杯琥珀色液体，整个敬酒动作透着踉跄与随意。背景是一间西式酒店宴会厅，身后是铺着白色桌布的长条餐桌与成排座椅，天花板垂下多盏水晶吊灯，远处几位虚化的欧美宾客正端着酒杯交谈，有人背对镜头。布光采用机顶闪光灯直闪效果，强硬的正面前置光把人物面部、衬衫与西装照得通亮，额头、鼻梁与颧骨出现清晰的高光，领带与衣料泛起刺目的反光，人物身后墙面上投下一道边缘锐利的深色阴影，而背景整体曝光不足，吊灯的暖光缩成一片模糊的光斑，营造出夜晚宴会厅抓拍快照的真实质感。取景为腰部以上的中近景，人物头身比例协调，面部特征、发型与原有着装保持不变，画面带有直闪摄影特有的明快主体与暗调背景的强烈对比。\n\nCheck constraints:\n- Redness: none. Good.\n- Prohibited words: check \"比如/如/例如\" — I used \"透着\" which is fine. \"如\" as part of \"如同\"? Not used. Check \"等\" — \"成排座椅\" fine; no \"等.\" \"有人背对镜头\" fine. \"或\" — none. \"稍微\" — none (used 微微, 略微? I used \"微微后仰\" and \"略微\"? Let me check: \"头部带着醉意微微后仰并向右侧倾斜\" OK. \"松散\" OK.\n- \"等\" check: \"水晶吊灯，远处几位虚化的欧美宾客正端着酒杯交谈\" no 等. Good.\n- No ellipses.\n- Flash description per dimension 9: user asked for direct flash, so hard light is user-requested. Describe region by region: highlights on forehead/nose/cheekbones, reflection on tie/fabric, hard shadow behind, background underexposed with bokeh. Good.\n- Ethnicity of added people: \"欧美宾客\" explicit. Good.\n- Identity preservation: face, hairstyle, clothing preserved. Good.\n- Framing expansion: waist-up medium close-up to show glass; head ratio natural.\n- Gaze: unfocused toward left front of lens; head tilted; body roughly facing camera. Consistent.\n- Hand: one hand holding glass described simply. Other hand: \"另一只手垂在身侧扶着椅背\"? Keep simple: let the other arm hang naturally at the side, mostly out of frame below the crop. Since waist-up crop, the other hand may be below the crop. Write \"左臂自然下垂、手部位于取景框外.\" Good — hides non-essential hand.\n\nWait: waist-up crop includes hips; the left hand may be visible at the side. Simpler: \"左臂放松下垂于身侧.\" Hand shape unspecified but visible... The rule says keep hands simple; a resting hand is fine. Or make the crop chest-up to hide the left hand. But then the toast glass is raised to shoulder height on the right side — visible. A chest-up crop may cut the glass partially. Waist-up is better; left hand can rest on the table edge? There's a table behind... He's standing. Left arm relaxed hanging, hand lightly touching the suit button area? Simplest: left arm bent behind the back? That's awkward. Let's do: \"左臂松弛地垂在身侧，左手轻捏着西装前襟边缘\" — concrete and simple. Hmm, that adds hand detail; acceptable (one sentence). Or just leave it out of frame: choose 胸腰以上? Let's just say waist-up and left hand hangs naturally at the side with fingers relaxed — fine.\n\nActually simpler: keep the framing at \"chest-up to waist-up\" and state the left arm hangs naturally at the side, hand exiting the lower edge of the frame. If waist-up, the hand at the side would be within the frame at hip level. Well, trivial. Let's write \"左臂放松垂落，左手搭在身后椅背上\" — implies he's seated? He's standing toasting. Keep standing: \"左臂自然下垂于身侧.\" Fine.\n\n- No text elements needed. Good.\n\n- Single dominant light: flash dominates; ambient chandelier is weak. Good.\n\n- Rim light: not added. Good.\n\nNow confirm \"闪光灯直闪拍摄\" is captured as snapshot aesthetic: mention 抓拍快照质感, slight motion? Add \"画面带有直闪抓拍特有的生硬对比与真实噪点.\" Fine.\n\nOne more check: prohibited vague \"好看/合适\" — none.\n\n\"琥珀色液体\" — describes liquid color, fine (not facial redness).\n\nConfirm no \"必须/不要\" prohibitions — none.\n\nFluency: single paragraph, transitions present.\n\nAlso, the opening should state the task: \"帮我生成一张……照片\" good.\n\nPreservation clause integrated near the end.\n\nAlso hairstyle preservation: \"发型保持不变\" included.\n\nLet me double-check the banned list once more for hidden words: \"像\" — \"像\" not used. \"诸如\" none. \"大约\" none. \"建议\" none. \"似乎\" none. \"类似\" none. \"及其他\" none. \"合适的\" none. \"相关\" none. \"对应\" none.\n\n\"有人背对镜头\" fine.\n\nNumbers: \"半杯\" fine.\n\nI think it's good. Also confirm no real-person naming needed.\n\nFinal JSON output with the prompt."
+      ],
+      "widgets_values_named": {
+        "text": "The user's instruction is in Chinese: \"图中男人在宴会厅里敬酒，他显然喝醉了，闪光灯直闪拍摄\" — \"The man in the image is toasting at a banquet hall, he is clearly drunk, shot with direct flash.\"\n\nThe input image shows a man (looks like Elon Musk) in a black suit, white shirt, and black tie, with a neutral expression, against a blurred background (looks like a stadium or event venue).\n\nI need to write a prompt that transforms this into a scene where the man is toasting at a banquet hall, clearly drunk, shot with direct on-camera flash.\n\nThis is a person-centric scene generation task. The identity must be preserved (face, hairstyle). The scene changes to a banquet hall, the action becomes toasting (holding a glass up), the state becomes drunk (facial expression: flushed cheeks? Wait — the facial redness constraint says no redness descriptions allowed! \"Prohibited facial redness descriptions — zero tolerance: facial descriptions must not contain any words or expressions related to redness, including but not limited to... facial flushing/red face...\" So I can't describe red cheeks. Drunkenness needs to be conveyed through other means: dazed expression, half-lidded eyes, loose posture, maybe sweat, slurred-looking mouth, stumbling, holding the glass loosely, etc. Avoid redness terms.\n\nDrunk cues without redness: heavy-lidded eyes, unfocused gaze, slightly open mouth, loose grip on the glass, leaning posture, maybe a napkin or handkerchief near the collar, sweat? Sweat isn't redness so it's fine. But careful: \"flushed\" is prohibited. Use \"dazed,\" \"heavy-lidded,\" \"unfocused,\" \"slightly swaying,\" \"loose grip.\"\n\nLighting: direct on-camera flash (闪光灯直闪拍摄) — harsh frontal flash lighting, bright subject, dark background falling off, slight shadow behind, snapshot aesthetic. This conflicts with the default soft editorial lighting, but the user explicitly requested flash, so follow the user.\n\nScene: banquet hall (宴会厅) — chandeliers, tables with tablecloths, blurred guests in the background, etc. Direct flash will illuminate the subject and make the background darker with visible bokeh lights.\n\nAction: toasting (敬酒) — raising a glass (wine glass or champagne glass) toward the camera or toward someone. He's drunk, so the toast might look sloppy. Holding a crystal wine glass raised to chest/shoulder height, hand loose.\n\nFraming: keep a similar bust/close-up framing as the input, or slightly wider to show the raised glass. The input is a head-and-shoulders close-up. To show the toasting, we need to include the raised hand and glass — expand framing to medium close-up (waist up or chest up) so the raised glass is visible. That's genuinely needed for the action.\n\nPreserve: face identity, hairstyle (brown short hair swept back/up), black suit, white shirt, black tie. Clothing stays the same (user didn't ask to change clothes). Keep the suit.\n\nExpression: drunk — dazed, heavy-lidded eyes, mouth slightly open or slack, unfocused gaze. Head tilted slightly.\n\nFlash photography style: direct on-camera flash, harsh frontal light, bright highlights on forehead/nose/cheeks, sharp shadow behind subject if close to background, background underexposed with warm chandelier bokeh lights, snapshot quality, slight motion blur? Keep it simple: hard direct flash, subject brightly lit, background darker.\n\nEthnicity/regional default: the input shows a Western male (looks like Elon Musk, but should I name him? The rule about ethnicity: when adding people, specify ethnicity. Background guests — added people. Should specify e.g. \"Western guests\" or match the subject's ethnicity. The subject appears Caucasian/Western. Added background people: banquet hall guests — specify as Western/Caucasian guests? The rule says to explicitly state chosen nationality/ethnicity for added/generated people. So write something like \"背景中虚化的西方宾客\" (blurred Western guests in the background). Actually the rule example uses nationality like Japanese/Chinese. For a Western setting, \"欧美\" or specific. Let's say the banquet hall is a Western-style banquet hall and the background guests are Western/Caucasian. Hmm, but naming \"Elon Musk\" is not required; just preserve identity.\n\nActually, should I avoid naming real people? The instruction doesn't ask to name him. Just describe as \"the man in the image.\"\n\nText elements: none needed. Maybe no text at all. Fine.\n\nOutput language: Chinese (user instruction is Chinese).\n\nNow let me carefully craft the prompt following the structure:\n\n① Task statement: generate a new photo of the man in the image toasting at a banquet hall, drunk, direct flash snapshot style.\n\n② Person-level changes: expression to dazed drunk state (heavy-lidded eyes, unfocused gaze, mouth slightly slack/open, head slightly tilted), pose: raise a crystal wine glass in one hand to the side of the shoulder in a sloppy toast, fingers loosely gripping the stem/cup, body slightly leaning.\n\n③ Scene: banquet hall — describe: long tables draped with white tablecloths, crystal chandeliers hanging from the ceiling, blurred background guests in the distance, warm-colored lights. Since it's flash, background darker.\n\n④ Lighting/style: direct on-camera flash — hard frontal flash, bright highlights on face and suit, distinct shadow on the wall behind, background underexposed with warm bokeh light spots, snapshot texture.\n\n⑤ Preservation: facial features, hairstyle, black suit white shirt black tie unchanged.\n\nWatch out for prohibited redness terms. Drunk without redness: \"面部肌肉松弛、眼神涣散、眼睑半垂、嘴巴微张\" etc.\n\nAlso, don't over-describe anatomy. Hand holding glass: one sentence is enough.\n\nFraming: medium close-up from waist up, showing the raised glass.\n\nHead-to-body ratio: since it's a bust expansion, keep natural proportions.\n\nLet me also think about gaze: toasting at a banquet — gaze direction could be toward the camera (as if toasting the photographer) or unfocused due to drunkenness. Drunk: gaze unfocused, maybe looking slightly past the camera. User said 敬酒 (toasting). A drunk toast often looks around. Let's do this: gaze dazed, looking slightly past the lens. Head and body oriented roughly toward the camera since he's toasting forward. That's consistent.\n\nFlash details: \"机顶闪光灯直闪\" produces bright, flat frontal light, specular highlights on the tie/shirt, hard-edged shadow on the wall behind, background falling off into darkness, warm ambient lights becoming bokeh.\n\nBackground guests: blurred, some facing away, holding glasses, Western guests. Specify ethnicity: \"欧美白人宾客\"? The rule says to explicitly state nationality/ethnicity for added people. Let's write \"背景中虚化的欧美宾客.\"\n\nBanquet hall regional style: Western-style banquet hall (酒店宴会厅). Fine.\n\nNow let me write a fluent paragraph in Chinese, with transitions, no lists, no prohibited vague words (avoid \"比如,\" \"等,\" \"稍微\"? \"稍微\" is prohibited! Avoid. Use concrete descriptors. Avoid \"自然\" as a hedge? \"自然\" is allowed when modifying concrete visuals. Avoid \"稍微\" — use \"微微\"? \"微微\" isn't on the ban list. The ban list includes 稍微/slightly. 微微 is similar but not listed; safer to use concrete phrasing like \"头部向左侧倾斜约十五度\"? That's too precise; \"头部略微后仰\" — 略微 is also similar to slightly... The ban targets vague hedges; mild degree descriptors are allowed when the change is concretely specified. Example given: \"身体略微后倾\" is allowed. So 略微/微微 with concrete target is OK.\n\nAvoid \"等\" — careful with enumerations ending in 等. Must fully enumerate.\n\nAvoid \"或/or.\"\n\nNo ellipses.\n\nLet me draft:\n\n帮我生成一张宴会厅敬酒场景的直闪抓拍照片：画面中这位男士身穿原有的黑色西装、白衬衫与黑色领带，在宴会厅中央举杯敬酒，神情明显喝醉。他的眼睑半垂、眼神涣散地望向镜头左前方，嘴巴微张、面部肌肉松弛，头部带着醉意微微后仰并向右侧倾斜，右手松垮地举着一只透明水晶高脚杯至肩侧高度，手指无力地环握杯梗，酒杯里残留半杯琥珀色液体，整个敬酒动作透着踉跄与随意。背景是一间西式酒店宴会厅，身后是铺着白色桌布的长条餐桌与成排座椅，天花板垂下多盏水晶吊灯，远处几位虚化的欧美宾客正端着酒杯交谈，有人背对镜头。布光采用机顶闪光灯直闪效果，强硬的正面前置光把人物面部、衬衫与西装照得通亮，额头、鼻梁与颧骨出现清晰的高光，领带与衣料泛起刺目的反光，人物身后墙面上投下一道边缘锐利的深色阴影，而背景整体曝光不足，吊灯的暖光缩成一片模糊的光斑，营造出夜晚宴会厅抓拍快照的真实质感。取景为腰部以上的中近景，人物头身比例协调，面部特征、发型与原有着装保持不变，画面带有直闪摄影特有的明快主体与暗调背景的强烈对比。\n\nCheck constraints:\n- Redness: none. Good.\n- Prohibited words: check \"比如/如/例如\" — I used \"透着\" which is fine. \"如\" as part of \"如同\"? Not used. Check \"等\" — \"成排座椅\" fine; no \"等.\" \"有人背对镜头\" fine. \"或\" — none. \"稍微\" — none (used 微微, 略微? I used \"微微后仰\" and \"略微\"? Let me check: \"头部带着醉意微微后仰并向右侧倾斜\" OK. \"松散\" OK.\n- \"等\" check: \"水晶吊灯，远处几位虚化的欧美宾客正端着酒杯交谈\" no 等. Good.\n- No ellipses.\n- Flash description per dimension 9: user asked for direct flash, so hard light is user-requested. Describe region by region: highlights on forehead/nose/cheekbones, reflection on tie/fabric, hard shadow behind, background underexposed with bokeh. Good.\n- Ethnicity of added people: \"欧美宾客\" explicit. Good.\n- Identity preservation: face, hairstyle, clothing preserved. Good.\n- Framing expansion: waist-up medium close-up to show glass; head ratio natural.\n- Gaze: unfocused toward left front of lens; head tilted; body roughly facing camera. Consistent.\n- Hand: one hand holding glass described simply. Other hand: \"另一只手垂在身侧扶着椅背\"? Keep simple: let the other arm hang naturally at the side, mostly out of frame below the crop. Since waist-up crop, the other hand may be below the crop. Write \"左臂自然下垂、手部位于取景框外.\" Good — hides non-essential hand.\n\nWait: waist-up crop includes hips; the left hand may be visible at the side. Simpler: \"左臂放松下垂于身侧.\" Hand shape unspecified but visible... The rule says keep hands simple; a resting hand is fine. Or make the crop chest-up to hide the left hand. But then the toast glass is raised to shoulder height on the right side — visible. A chest-up crop may cut the glass partially. Waist-up is better; left hand can rest on the table edge? There's a table behind... He's standing. Left arm relaxed hanging, hand lightly touching the suit button area? Simplest: left arm bent behind the back? That's awkward. Let's do: \"左臂松弛地垂在身侧，左手轻捏着西装前襟边缘\" — concrete and simple. Hmm, that adds hand detail; acceptable (one sentence). Or just leave it out of frame: choose 胸腰以上? Let's just say waist-up and left hand hangs naturally at the side with fingers relaxed — fine.\n\nActually simpler: keep the framing at \"chest-up to waist-up\" and state the left arm hangs naturally at the side, hand exiting the lower edge of the frame. If waist-up, the hand at the side would be within the frame at hip level. Well, trivial. Let's write \"左臂放松垂落，左手搭在身后椅背上\" — implies he's seated? He's standing toasting. Keep standing: \"左臂自然下垂于身侧.\" Fine.\n\n- No text elements needed. Good.\n\n- Single dominant light: flash dominates; ambient chandelier is weak. Good.\n\n- Rim light: not added. Good.\n\nNow confirm \"闪光灯直闪拍摄\" is captured as snapshot aesthetic: mention 抓拍快照质感, slight motion? Add \"画面带有直闪抓拍特有的生硬对比与真实噪点.\" Fine.\n\nOne more check: prohibited vague \"好看/合适\" — none.\n\n\"琥珀色液体\" — describes liquid color, fine (not facial redness).\n\nConfirm no \"必须/不要\" prohibitions — none.\n\nFluency: single paragraph, transitions present.\n\nAlso, the opening should state the task: \"帮我生成一张……照片\" good.\n\nPreservation clause integrated near the end.\n\nAlso hairstyle preservation: \"发型保持不变\" included.\n\nLet me double-check the banned list once more for hidden words: \"像\" — \"像\" not used. \"诸如\" none. \"大约\" none. \"建议\" none. \"似乎\" none. \"类似\" none. \"及其他\" none. \"合适的\" none. \"相关\" none. \"对应\" none.\n\n\"有人背对镜头\" fine.\n\nNumbers: \"半杯\" fine.\n\nI think it's good. Also confirm no real-person naming needed.\n\nFinal JSON output with the prompt."
+      }
+    },
+    {
+      "id": 25,
+      "type": "ComfySwitchNode",
+      "pos": [
+        3191.766254364845,
+        3467.5098510261346
+      ],
+      "size": [
+        270,
+        80
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_false",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 38
+        },
+        {
+          "name": "on_true",
+          "shape": 7,
+          "type": "LATENT",
+          "link": 42
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [
+            39
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "Node name for S&R": "ComfySwitchNode",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        true
+      ],
+      "widgets_values_named": {
+        "switch": true
+      }
+    },
+    {
+      "id": 26,
+      "type": "ResolutionSelector",
+      "pos": [
+        1661.0206961675108,
+        3598.46181579876
+      ],
+      "size": [
+        359.590882688633,
+        193.25041178301626
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "showAdvanced": true,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            40
+          ]
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            41
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        },
+        "Node name for S&R": "ResolutionSelector"
+      },
+      "widgets_values": [
+        "4:3 (Standard)",
+        2,
+        32
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "4:3 (Standard)",
+        "megapixels": 2,
+        "multiple": 32
+      }
+    },
+    {
+      "id": 27,
+      "type": "EmptyLatentImage",
+      "pos": [
+        2249.580448078486,
+        3584.3330575939844
+      ],
+      "size": [
+        300,
+        120
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 40
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 41
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            42
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.36.0",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        },
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ],
+      "widgets_values_named": {
+        "width": 1024,
+        "height": 1024,
+        "batch_size": 1
+      }
+    }
+  ],
+  "links": [
+    [
+      2,
+      3,
+      0,
+      2,
+      0,
+      "LATENT"
+    ],
+    [
+      3,
+      17,
+      0,
+      2,
+      1,
+      "VAE"
+    ],
+    [
+      4,
+      6,
+      0,
+      3,
+      0,
+      "NOISE"
+    ],
+    [
+      5,
+      4,
+      0,
+      3,
+      1,
+      "GUIDER"
+    ],
+    [
+      6,
+      5,
+      1,
+      3,
+      2,
+      "SAMPLER"
+    ],
+    [
+      7,
+      5,
+      2,
+      3,
+      3,
+      "SIGMAS"
+    ],
+    [
+      10,
+      9,
+      0,
+      4,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      18,
+      13,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      19,
+      15,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      22,
+      0,
+      23,
+      0,
+      "STRING"
+    ],
+    [
+      33,
+      22,
+      1,
+      24,
+      0,
+      "STRING"
+    ],
+    [
+      35,
+      7,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      5,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      37,
+      16,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      38,
+      9,
+      2,
+      25,
+      0,
+      "LATENT"
+    ],
+    [
+      39,
+      25,
+      0,
+      3,
+      4,
+      "LATENT"
+    ],
+    [
+      1,
+      2,
+      0,
+      1,
+      0,
+      "IMAGE"
+    ],
+    [
+      14,
+      12,
+      0,
+      9,
+      0,
+      "CLIP"
+    ],
+    [
+      15,
+      11,
+      0,
+      9,
+      1,
+      "IMAGE"
+    ],
+    [
+      16,
+      17,
+      0,
+      9,
+      2,
+      "VAE"
+    ],
+    [
+      34,
+      15,
+      0,
+      20,
+      0,
+      "IMAGE"
+    ],
+    [
+      29,
+      21,
+      0,
+      22,
+      0,
+      "CLIP"
+    ],
+    [
+      30,
+      20,
+      0,
+      22,
+      1,
+      "IMAGE"
+    ],
+    [
+      31,
+      19,
+      0,
+      22,
+      4,
+      "STRING"
+    ],
+    [
+      40,
+      26,
+      0,
+      27,
+      0,
+      "INT"
+    ],
+    [
+      41,
+      26,
+      1,
+      27,
+      1,
+      "INT"
+    ],
+    [
+      42,
+      27,
+      0,
+      25,
+      1,
+      "LATENT"
+    ],
+    [
+      43,
+      22,
+      0,
+      9,
+      3,
+      "STRING"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Prompt Enhance",
+      "bounding": [
+        1650.3449762471998,
+        3827.207247381089,
+        1466.2042362068387,
+        884.6544528552477
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ue_links": [],
+    "links_added_by_ue": [],
+    "ds": {
+      "scale": 0.9229599817706766,
+      "offset": [
+        -558.3182186094632,
+        -3008.351253776333
+      ]
+    },
+    "frontendVersion": "1.53.6",
+    "VHS_latentpreview": true,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

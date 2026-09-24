@@ -1,0 +1,188 @@
+{
+  "last_node_id": 3,
+  "last_link_id": 3,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "QwenImage21FunPDDLoader",
+      "pos": [
+        70,
+        150
+      ],
+      "size": [
+        390,
+        125
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "pdd_euler",
+          "type": "SAMPLER",
+          "links": [
+            2
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "pdd_sigmas",
+          "type": "SIGMAS",
+          "links": [
+            3
+          ],
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "QwenImage21FunPDDLoader"
+      },
+      "widgets_values": [
+        "qwenimage2.1\\Qwen-Image-2.1-Fun-Acc-4Step.safetensors"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "SamplerCustom",
+      "pos": [
+        550,
+        150
+      ],
+      "size": [
+        335,
+        325
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": null
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": null
+        },
+        {
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 2
+        },
+        {
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 3
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 0
+        },
+        {
+          "name": "denoised_output",
+          "type": "LATENT",
+          "links": [],
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SamplerCustom"
+      },
+      "widgets_values": [
+        true,
+        42,
+        "fixed",
+        1.0
+      ]
+    },
+    {
+      "id": 3,
+      "type": "Note",
+      "pos": [
+        70,
+        345
+      ],
+      "size": [
+        405,
+        265
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "title": "接入现有 Qwen-Image 2.1 工作流",
+      "properties": {},
+      "widgets_values": [
+        "这是采样连接片段，不是可独立运行的完整工作流。\n\n1. 原生 Qwen-Image 2.1 基础 MODEL 接左侧 PDD 节点。\n2. 将现有 positive、negative、latent_image 接右侧 SamplerCustom。\n3. SamplerCustom 的 output 接现有 VAE Decode。\n4. 保持 cfg=1、add_noise=true。四步与 sigma 已固定，不用额外 Scheduler。\n5. 不要再次用普通 LoraLoader 加载相同文件。\n\n先重启 ComfyUI，确保自定义 PDD 节点已加载。"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      1,
+      1,
+      2,
+      3,
+      "SAMPLER"
+    ],
+    [
+      3,
+      1,
+      2,
+      2,
+      4,
+      "SIGMAS"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.0,
+      "offset": [
+        10,
+        10
+      ]
+    }
+  },
+  "version": 0.4
+}

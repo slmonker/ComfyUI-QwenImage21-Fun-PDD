@@ -1,0 +1,10 @@
+[project]
+name = "comfyui-qwenimage21-fun-pdd"
+version = "0.1.0"
+description = "Unofficial native ComfyUI adapter for Qwen-Image 2.1 Fun-Acc four-step PDD exports"
+readme = "README.md"
+requires-python = ">=3.10"
+
+[project.urls]
+Repository = "https://github.com/slmonker/ComfyUI-QwenImage21-Fun-PDD"
+Issues = "https://github.com/slmonker/ComfyUI-QwenImage21-Fun-PDD/issues"

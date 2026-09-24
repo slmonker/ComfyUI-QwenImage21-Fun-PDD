@@ -8,7 +8,7 @@ From this repository:
 python -m unittest discover -s tests -p "test_package.py" -v
 ```
 
-Checks source parsing, the bundled four-step configuration, LoRA/full-weight target counts and example link integrity.
+Checks source parsing, the bundled four-step configuration and LoRA/full-weight target counts.
 
 ## Native integration tests
 
@@ -47,6 +47,5 @@ Environment: ComfyUI commit `1568e6cfd0`; CPU and NVIDIA GeForce RTX 5090 D. The
 - Full-base-checkpoint end-to-end image generation or editing.
 - Visual quality or bitwise parity against official Diffusers output.
 - Dynamic VRAM, FP8/GGUF, multi-GPU, torch.compile, masked inpainting or arbitrary third-party patch combinations.
-- Runtime loading of the example through the web UI. Its graph links and slot types are checked statically.
 
 Please include the ComfyUI version, base-model type/precision, complete error traceback and a minimal workflow when filing an issue. Do not upload model weights, access tokens or private prompts.

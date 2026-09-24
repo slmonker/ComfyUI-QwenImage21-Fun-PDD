@@ -65,12 +65,6 @@ SamplerCustom.output ──────► VAE Decode
 
 也支持 `BasicGuider + RandomNoise + SamplerCustomAdvanced`：MODEL 接 BasicGuider，正面条件接其 conditioning，另外两个输出接高级自定义采样器的 sampler 与 sigmas。
 
-### 接线示例
-
-打开 [`examples/Fun-PDD-sampling-block.json`](examples/Fun-PDD-sampling-block.json)。它已经连接 PDD 节点与 SamplerCustom 的三个接口。
-
-**这是采样连接片段，不是可独立运行的完整工作流。** 需要接入你自己的基础模型、正负面条件、latent 与 VAE Decode，并确认 LoRA 下拉框选择了实际文件。
-
 ### 注意
 
 - 不要用普通 KSampler 设置四步来替代此接法。

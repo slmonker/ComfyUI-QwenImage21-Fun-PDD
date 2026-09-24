@@ -33,8 +33,6 @@ Connect all three outputs to **SamplerCustom**, set **cfg=1, add_noise=true**, a
 
 Alternatively use BasicGuider + RandomNoise + SamplerCustomAdvanced. The model output goes to BasicGuider; sampler and sigmas go directly to SamplerCustomAdvanced.
 
-A prewired [sampling block](examples/Fun-PDD-sampling-block.json) is included. **It is a fragment, not a standalone image-generation workflow.** Supply your base model, conditioning, latent and decoder; select the actual LoRA filename after import.
-
 Do not also apply the same file through a regular LoRA loader. Do not replace the supplied schedule with a normal four-step KSampler or an additional shift/scheduler node.
 
 ## What it loads

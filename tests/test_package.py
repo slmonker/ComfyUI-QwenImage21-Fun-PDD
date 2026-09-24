@@ -28,23 +28,6 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(len(set(targets)), len(targets))
         self.assertEqual(len(set(config["pdd_full_parameters"])), 65)
 
-    def test_example_connections(self):
-        workflow = json.loads((ROOT / "examples" / "Fun-PDD-sampling-block.json").read_text(encoding="utf-8-sig"))
-        nodes = {node["id"]: node for node in workflow["nodes"]}
-        self.assertEqual(nodes[1]["type"], "QwenImage21FunPDDLoader")
-        self.assertEqual(nodes[2]["type"], "SamplerCustom")
-        self.assertEqual(nodes[2]["widgets_values"], [True, 42, "fixed", 1.0])
-        for link_id, src, slot, dst, dst_slot, data_type in workflow["links"]:
-            self.assertIn(link_id, nodes[src]["outputs"][slot]["links"])
-            self.assertEqual(nodes[dst]["inputs"][dst_slot]["link"], link_id)
-            self.assertEqual(nodes[src]["outputs"][slot]["type"], data_type)
-            self.assertEqual(nodes[dst]["inputs"][dst_slot]["type"], data_type)
-        # External model/conditioning/latent connections must remain visibly unconnected.
-        self.assertIsNone(nodes[1]["inputs"][0]["link"])
-        self.assertIsNone(nodes[2]["inputs"][1]["link"])
-        self.assertIsNone(nodes[2]["inputs"][2]["link"])
-        self.assertIsNone(nodes[2]["inputs"][5]["link"])
-
 
 if __name__ == "__main__":
     unittest.main()

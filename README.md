@@ -1,120 +1,93 @@
 # ComfyUI-QwenImage21-Fun-PDD
 
-**Qwen-Image 2.1 Fun-Acc 四步 PDD 的非官方 ComfyUI 原生适配节点。**
+**Unofficial native ComfyUI adapter for Qwen-Image 2.1 Fun-Acc four-step PDD exports.**
 
-[English](README.en.md) · [上游模型](https://huggingface.co/alibaba-pai/Qwen-Image-2.1-Fun-Acc-LoRAs) · [问题反馈](https://github.com/slmonker/ComfyUI-QwenImage21-Fun-PDD/issues)
+**English** · [简体中文](README.zh-CN.md) · [Upstream model](https://huggingface.co/alibaba-pai/Qwen-Image-2.1-Fun-Acc-LoRAs)
 
-> 本项目不是 Alibaba PAI / VideoX-Fun 官方插件，也不代表其维护团队。
-> 当前为实验性适配：通过权重完整性检查、数值测试及缩小尺寸的原生模型 CPU/CUDA 前向测试，**尚未完成完整基础模型的端到端出图及与官方结果的视觉对比**。
+> Experimental and unofficial — not an Alibaba PAI / VideoX-Fun plugin. Maintainer-provided demos are shown below. Automated validation covers checkpoint mapping, numerical checks and reduced-size native-model CPU/CUDA forwards; independent end-to-end reproduction and controlled upstream comparisons remain unverified.
 
-## 为什么需要专用节点？
+## Demos
 
-`Qwen-Image-2.1-Fun-Acc-4Step.safetensors` 不只是普通 LoRA：
+**Local test environment for both screenshots (provided by the maintainer):**
 
-| 内容 | 本节点的处理 |
-| --- | --- |
-| 231 对低秩权重，rank=64、alpha=64 | 使用原生 LoRA 补丁映射，强度固定为 1 |
-| 65 个完整归一化参数 | 替换原参数，而不是作为增量相加 |
-| `proj_out.weight`，形状 `[4, 64, 4096]` | 按当前采样 sigma 切换四个输出头 |
-| 固定四步 sigma | 输出配套 Euler SAMPLER 与 SIGMAS |
+- **GPU:** NVIDIA GeForce RTX 5090 D — **32GB VRAM**
+- **System memory:** **128GB DDR5 RAM**
 
-只给 `lora_up` / `lora_down` 补上 `.weight` 后缀，不能处理完整的四步推理逻辑。本节点直接读取原始 safetensors，不覆盖或转换源文件。
+The timings visible in these screenshots were recorded on this local setup and should not be generalized to other hardware.
 
-## 安装
+### Workflow and generated output
 
-在 **ComfyUI 根目录**执行：
+![ComfyUI PDD workflow with a generated science-fiction city image](assets/demo-workflow.png)
+
+A workflow screenshot supplied by the maintainer, showing the PDD node connected to the custom sampling path and its generated output.
+
+### Sampler comparison
+
+![Maintainer-provided screenshot comparing a custom sampler with a 40-step KSampler](assets/demo-sampler-comparison.png)
+
+The screenshot shows a custom sampler alongside a KSampler configured for 40 steps. On-screen timings are observations from the maintainer's run, **not a controlled benchmark or a universal speed/quality guarantee**; hardware, settings, caching and output sizes can affect results.
+
+[Get the example workflows](#example-workflows).
+
+## Install
+
+From the ComfyUI root:
 
 ```bash
 git clone https://github.com/slmonker/ComfyUI-QwenImage21-Fun-PDD.git custom_nodes/ComfyUI-QwenImage21-Fun-PDD
 ```
 
-然后重启 ComfyUI 并刷新页面。不需要额外安装 Python 包；使用 ComfyUI 环境已有的 PyTorch 和 safetensors。
+Restart ComfyUI and refresh the browser. No additional Python packages are required beyond the ComfyUI environment's PyTorch and safetensors.
 
-从[上游模型页](https://huggingface.co/alibaba-pai/Qwen-Image-2.1-Fun-Acc-LoRAs)下载原始 `Qwen-Image-2.1-Fun-Acc-4Step.safetensors`，放入 ComfyUI 的 `models/loras` 或已注册的 LoRA 目录。模型权重不包含在本仓库中。
+Download the original `Qwen-Image-2.1-Fun-Acc-4Step.safetensors` from the upstream model repository and place it in a registered ComfyUI LoRA directory. Weights are not distributed here. Only the `qwenimage21_extracted_prefused_v1` four-head export is supported.
 
-### 前提
+Requires native Qwen-Image 2.1 support, ModelPatcher weight wrappers, the DIFFUSION_MODEL wrapper extension, and fused MLP LoRA slice mapping. Tested against ComfyUI commit `1568e6cfd0` with the relevant core files unmodified.
 
-- ComfyUI 必须已支持**原生 Qwen-Image 2.1**，不是旧 Qwen-Image / Edit 2509 / Edit 2511。
-- 需要 `ModelPatcher.add_weight_wrapper`、`DIFFUSION_MODEL` wrapper，以及 Qwen-Image 2.1 融合 MLP 的 LoRA 分片映射。
-- 本次测试使用的 ComfyUI commit：`1568e6cfd0`，相关核心文件无本地改动。更老版本不保证兼容。
+## Use
 
-## 节点与接线
+Search for **PDD** and add **Qwen-Image 2.1 Fun PDD (4-Step)**.
 
-搜索 **`PDD`**，添加 **`Qwen-Image 2.1 Fun PDD (4-Step)`**。
+- Class: `QwenImage21FunPDDLoader`
+- Category: `loaders / Qwen-Image 2.1`
+- Inputs: base `MODEL`, original LoRA filename
+- Outputs: patched `MODEL`, fixed PDD Euler `SAMPLER`, fixed `SIGMAS`
 
-- 内部名称：`QwenImage21FunPDDLoader`
-- 分类：`loaders / Qwen-Image 2.1`
-- 输入：`model`、`lora_name`
-- 输出：`MODEL`、`SAMPLER`、`SIGMAS`
+Connect all three outputs to **SamplerCustom**, set **cfg=1, add_noise=true**, and connect the positive/negative conditioning and latent from your existing Qwen-Image 2.1 workflow. Decode its output using the existing VAE.
 
-```text
-原生 Qwen-Image 2.1 MODEL
-          │
-          ▼
-Qwen-Image 2.1 Fun PDD (4-Step)
-          ├── model ──────► SamplerCustom.model
-          ├── pdd_euler ──► SamplerCustom.sampler
-          └── pdd_sigmas ─► SamplerCustom.sigmas
+Alternatively use BasicGuider + RandomNoise + SamplerCustomAdvanced. The model output goes to BasicGuider; sampler and sigmas go directly to SamplerCustomAdvanced.
 
-正面 / 负面条件 ────────────► SamplerCustom.positive / negative
-潜空间图像 ────────────────► SamplerCustom.latent_image
-SamplerCustom.output ──────► VAE Decode
-```
+Do not also apply the same file through a regular LoRA loader. Do not replace the supplied schedule with a normal four-step KSampler or an additional shift/scheduler node.
 
-**SamplerCustom 设置 `cfg=1`、`add_noise=true`。** 文本编码器、潜空间节点与 VAE 沿用现有 Qwen-Image 2.1 工作流。
+## Example workflows
 
-也支持 `BasicGuider + RandomNoise + SamplerCustomAdvanced`：MODEL 接 BasicGuider，正面条件接其 conditioning，另外两个输出接高级自定义采样器的 sampler 与 sigmas。
-
-### 示例工作流
-
-| 用途 | 工作流 |
+| Use case | Workflow |
 | --- | --- |
-| 四步文生图（T2I） | [Fun-PDD-sampling-4steps-t2i.json](examples/Fun-PDD-sampling-4steps-t2i.json) |
-| 四步图像编辑（Edit） | [qwenimage2.1-pdd-4steps-edit.json](examples/qwenimage2.1-pdd-4steps-edit.json) |
+| Four-step text-to-image (T2I) | [Fun-PDD-sampling-4steps-t2i.json](examples/Fun-PDD-sampling-4steps-t2i.json) |
+| Four-step image editing | [qwenimage2.1-pdd-4steps-edit.json](examples/qwenimage2.1-pdd-4steps-edit.json) |
 
-这两个示例由仓库维护者提供，按原文件收录。下载 JSON 后拖入 ComfyUI，按本机环境选择对应的模型、文本编码器、VAE 和 LoRA，并安装工作流使用的额外自定义节点。编辑工作流中的输入图片需要重新选择；模型权重和输入图片不随 JSON 分发。
+Both workflows were supplied by the repository maintainer and are included unchanged. Download and drag the JSON into ComfyUI, select the model, text encoder, VAE and LoRA available in your installation, and install any additional custom nodes used by the workflow. Reselect the input image for the editing workflow. Model weights and input images are not bundled.
 
-收录时已检查 JSON 解析和节点连线，未发现明显凭据；这不等于已在其他环境完成出图验证，也不改变下文的兼容性边界。
+JSON parsing and node-link consistency were checked when adding these files, with no obvious credentials found. This is not an end-to-end render test on other installations and does not extend the compatibility claims below.
 
-### 注意
+## What it loads
 
-- 不要用普通 KSampler 设置四步来替代此接法。
-- 不需要额外 Scheduler 或 Shift 节点；不要替换、裁剪本节点输出的 sigma 序列。
-- 不要再次用普通 LoraLoader 加载同一个文件。
-- 推荐从没有其他加速补丁的 BF16 基础模型开始，CFG=1。
+- 231 LoRA pairs, rank=alpha=64, fixed strength 1.
+- 65 complete normalization weights as replacement patches, not additive deltas.
+- Four output heads from `proj_out.weight`, shape `[4, 64, 4096]`, selected by sigma.
+- The fixed sigma sequence `[1, 0.9169867038726807, 0.7861579060554504, 0.5494909882545471, 0]`.
 
-固定 sigma：
+The adapter validates every checkpoint key and tensor shape, including the separate gate/projection halves of fused MLPs. It uses a model clone and ModelPatcher extensions, not core edits or direct forward monkey-patching. Head selection is scoped to each forward using ContextVar, with cleanup on exceptions. Euler state remains FP32; native Qwen-Image 2.1 owns timestep rounding. Prefix KV caching is disabled for the patched clone to match the upstream example.
 
-```text
-1.0
-0.9169867038726807
-0.7861579060554504
-0.5494909882545471
-0.0
-```
+## Limitations and tests
 
-## 实现和边界
+Start with an unmodified BF16 base model and CFG=1. This is not for legacy Qwen-Image, Edit 2509/2511, or third-party Diffusers pipeline objects.
 
-通过模型克隆及 ModelPatcher 注册 LoRA、完整参数补丁和输出头 wrapper；不改 ComfyUI 核心文件，也不直接替换模型 forward。输出头选择使用 ContextVar，在一次 forward 内隔离状态，异常后清理。采样状态使用 FP32，时间输入沿用原生 Qwen-Image 2.1 的舍入逻辑；该模型克隆的前缀 KV 缓存关闭，以匹配上游示例。
+ComfyUI merges LoRA weights whereas the upstream Diffusers implementation evaluates separate low-rank branches. Bitwise or pixel-identical upstream output is **not** promised. FP8/GGUF, dynamic VRAM paths, multi-device sharding, torch.compile, masked inpainting and combinations with other model patches remain unverified.
 
-原生 ComfyUI 合并 LoRA 权重，而上游 Diffusers 使用独立低秩分支，**不承诺逐像素或逐位复现上游输出**。FP8/GGUF、动态显存路径、多设备分片、torch.compile、局部重绘蒙版以及其他模型修改插件的组合，尚未完成验证。
+See [TESTING.md](TESTING.md) for reproducible tests and the precise validation scope. The screenshots above are maintainer-provided demonstrations, not independent full-model validation or a controlled performance benchmark.
 
-## 验证状态
+## Provenance and licensing
 
-见 [TESTING.md](TESTING.md)。本地完成的 7 项集成测试包括：
+The model, PDD method and bundled `pdd_config.json` originate from [Alibaba PAI](https://huggingface.co/alibaba-pai/Qwen-Image-2.1-Fun-Acc-LoRAs); see also [VideoX-Fun](https://github.com/aigc-apps/VideoX-Fun). This repository contains no model weights or copied upstream inference scripts.
 
-- 原始检查点全部 **528 个张量**与完整尺寸的 meta 模型对应；
-- 融合 gate_up 两半的 LoRA 数值与归一化替换；
-- 四个输出头选择与异常后的状态清理；
-- FP32 Euler 与固定四步 sigma；
-- 缩小尺寸的原生 Qwen-Image 2.1 CPU / CUDA BF16 前向；
-- 克隆模型卸载后原模型恢复；
-- 错误文件、形状、重复应用与越界文件名的拒绝。
-
-完整模型出图、性能基准和官方图像对比仍待验证，欢迎提交可复现的问题报告。
-
-## 来源与许可说明
-
-模型、PDD 方法和采样配置来自 [Alibaba PAI 模型仓库](https://huggingface.co/alibaba-pai/Qwen-Image-2.1-Fun-Acc-LoRAs)，上游实现见 [VideoX-Fun](https://github.com/aigc-apps/VideoX-Fun)。本仓库附带的 `pdd_config.json` 保留上游配置；不包含模型权重或上游推理脚本。
-
-模型与上游材料受其各自许可约束。本仓库暂未指定独立软件许可证；公开发布不替代上游授权，也不表示项目组认可本适配。
+Upstream materials retain their respective terms. No independent software license has been selected for this repository yet. Public availability does not replace upstream permissions or imply endorsement.

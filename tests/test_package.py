@@ -1,5 +1,6 @@
 import ast
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -46,6 +47,29 @@ class PackageTests(unittest.TestCase):
                     self.assertIn(dst, nodes)
                     self.assertIn(link_id, nodes[src]["outputs"][src_slot]["links"])
                     self.assertEqual(nodes[dst]["inputs"][dst_slot]["link"], link_id)
+
+
+    def test_bilingual_readmes_and_demo_assets(self):
+        english = (ROOT / "README.md").read_text(encoding="utf-8")
+        chinese = (ROOT / "README.zh-CN.md").read_text(encoding="utf-8")
+        self.assertIn("**Unofficial native ComfyUI adapter", english)
+        self.assertIn("[简体中文](README.zh-CN.md)", english)
+        self.assertIn("[English](README.md)", chinese)
+        self.assertFalse((ROOT / "README.en.md").exists())
+        self.assertIn("NVIDIA GeForce RTX 5090 D", english)
+        self.assertIn("32GB VRAM", english)
+        self.assertIn("128GB DDR5 RAM", english)
+        self.assertIn("NVIDIA GeForce RTX 5090 D，32GB 显存", chinese)
+        self.assertIn("系统内存：128GB DDR5", chinese)
+        expected = {"assets/demo-workflow.png", "assets/demo-sampler-comparison.png"}
+        for text in (english, chinese):
+            images = set(re.findall(r"!\[[^\]]*\]\(([^)]+)\)", text))
+            self.assertEqual(images, expected)
+            for path in images:
+                self.assertTrue((ROOT / path).read_bytes().startswith(b"\x89PNG\r\n\x1a\n"))
+            for target in re.findall(r"(?<!!)\[[^\]]+\]\(([^)]+)\)", text):
+                if "://" not in target and not target.startswith("#"):
+                    self.assertTrue((ROOT / target.split("#", 1)[0]).is_file(), target)
 
 
 if __name__ == "__main__":

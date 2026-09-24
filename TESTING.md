@@ -8,7 +8,7 @@ From this repository:
 python -m unittest discover -s tests -p "test_package.py" -v
 ```
 
-Checks source parsing, the bundled four-step configuration, LoRA/full-weight target counts and the two maintainer-provided example workflows' JSON/node-link consistency. The example files are included unchanged; this static check does not execute them.
+Checks source parsing, the bundled four-step configuration, LoRA/full-weight target counts, the two maintainer-provided example workflows' JSON/node-link consistency, and bilingual README/demo asset links. The example files are included unchanged; this static check does not execute them.
 
 ## Native integration tests
 
@@ -44,7 +44,7 @@ Environment: ComfyUI commit `1568e6cfd0`; CPU and NVIDIA GeForce RTX 5090 D. The
 
 ## Not yet validated
 
-- Full-base-checkpoint end-to-end image generation or editing.
+- Independent full-base-checkpoint end-to-end reproduction. The README includes maintainer-supplied demo screenshots; the automated tests do not reproduce those runs.
 - Visual quality or bitwise parity against official Diffusers output.
 - Dynamic VRAM, FP8/GGUF, multi-GPU, torch.compile, masked inpainting or arbitrary third-party patch combinations.
 
